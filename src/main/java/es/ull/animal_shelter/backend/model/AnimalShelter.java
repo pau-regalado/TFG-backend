@@ -8,25 +8,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Document
-public class Animal {
+public class AnimalShelter {
 	@Id
 	private String id;
 	private String name;
-	private String color;
-	private String size;
-	private String race;
-	private String description;
-	private String birth_date;
-	private String entryDate;
-	private String sex;
-	private Integer age;
-	private Boolean sterile;
-	private Boolean disability;
+	private String location;
+	private Integer numberPhone;
 	
 }

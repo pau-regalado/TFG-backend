@@ -17,36 +17,36 @@ import es.ull.animal_shelter.backend.service.AnimalService;
 //import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/animals")
 //@RequiredArgsConstructor
 public class AnimalController {
 	@Autowired
 	private AnimalService animalService;
 	
-	@PostMapping("/animals")
+	@PostMapping
 	public Animal save(@RequestBody Animal animal) {
 		animalService.save(animal);
 		return animal;
 	}
 	
-	@GetMapping("/animals")
+	@GetMapping
 	public List<Animal> findAll() {
 		animalService.findAll().stream().map(a -> a)
 		.forEach(a -> System.out.print(a.toString()));
 		return animalService.findAll();
 	}
 	
-	@GetMapping("/animals/{id}")
+	@GetMapping("/{idAnimal}")
 	public Animal findById(@PathVariable String id) {
 		return animalService.findById(id);
 	}
 	
-	@DeleteMapping("/animals/{id}")
+	@DeleteMapping("/{idAnimal}")
 	public void deleteById(@PathVariable String id) {
 		animalService.deleteById(id);
 	}
 	
-	@PutMapping("/animals")
+	@PutMapping
 	public void update(@RequestBody Animal animal) {
 		animalService.save(animal);
 	}
