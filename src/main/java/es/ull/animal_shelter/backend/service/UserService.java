@@ -35,15 +35,9 @@ public class UserService {
         return clientRepository.findByUsername(username)
         		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with username: " + username));
     }
-    
-    public void deleteById(String id) {
-        clientRepository.deleteById(id);
-		
-	}
 
 	public void deleteById(String id) {
-		userRepository.deleteById(id);
-		
+        clientRepository.deleteById(id);
 	}
 
 }
