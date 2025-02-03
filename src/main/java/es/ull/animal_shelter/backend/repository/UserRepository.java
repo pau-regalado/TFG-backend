@@ -1,4 +1,4 @@
-package es.ull.animal_shelter.backend.repository;
+/*package es.ull.animal_shelter.backend.repository;
 
 import java.util.Optional;
 
@@ -10,4 +10,6 @@ import es.ull.animal_shelter.backend.model.User;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
     Optional<User> findByUsername(String username);
-}
+    List<Client> findAll();
+
+}*/
