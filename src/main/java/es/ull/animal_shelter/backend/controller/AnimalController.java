@@ -28,6 +28,12 @@ public class AnimalController {
 		animalService.save(animal);
 		return animal;
 	}
+
+	/*@PostMapping("/test/animals")
+	public Animal save(@RequestBody Animal animal) {
+		animalService.save(animal);
+		return animal;
+	}*/
 	
 	@GetMapping("/animals")
 	public List<Animal> findAll() {

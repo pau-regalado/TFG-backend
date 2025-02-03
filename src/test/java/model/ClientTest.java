@@ -39,11 +39,11 @@ class ClientServiceTest {
         MockitoAnnotations.openMocks(this);
 
         client = new Client();
-        //client.setId("client123");
+        client.setId("client123");
         client.setName("John");
         client.setLastName("Nieve");
-        /*client.setLastName("Doe");
-        client.setAnimalWL(new ArrayList<>()); // Inicializar lista vacía*/
+        client.setLastName("Doe");
+        client.setAnimalWL(new ArrayList<>()); // Inicializar lista vacía
 
         // Crear un animal de prueba
         animal = new Animal();

@@ -36,6 +36,12 @@ class AnimalServiceTest {
         animal.setName("John");
         animal.setColor("negro");
         animal.setDescription(null);
+        animal.setBirth_date("20-03-2020");
+        animal.setEntryDate("07-07-2024");
+        animal.setSex("Macho");
+        animal.setAge(5);
+        animal.setSterile(true);
+        animal.setDisability(false);
 
         when(animalRepository.findById("123")).thenReturn(Optional.of(animal));
         when(animalRepository.findAll()).thenReturn(List.of(animal));
