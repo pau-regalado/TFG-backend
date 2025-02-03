@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,7 +21,7 @@ public class Animal {
 	private String size;
 	private String race;
 	private String description;
-	private String birth_date;
+	private String birthdate;
 	private String entryDate;
 	private String sex;
 	private Integer age;
