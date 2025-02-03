@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import es.ull.animal_shelter.backend.model.Client;
 import es.ull.animal_shelter.backend.model.User;
-import es.ull.animal_shelter.backend.repository.AnimalRepository;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -22,9 +21,9 @@ public class ClientService {
 		return clientRepository.save(client);	
 	}
     
-    public User findByUsername(String username) {
+    public Client findByUsername(String username) {
         return clientRepository.findByUsername(username)
-        		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with username: " + username));
+        		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found with username: " + username));
     }
     
     public List<Client> findAll() {
