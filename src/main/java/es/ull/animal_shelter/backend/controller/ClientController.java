@@ -2,6 +2,7 @@ package es.ull.animal_shelter.backend.controller;
 
 import java.util.List;
 
+import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,11 @@ public class ClientController {
 		clientService.findAll().stream().map(a -> a)
 		.forEach(a -> System.out.print(a.toString()));
 		return clientService.findAll();
+	}
+
+	@PostMapping("/login")
+	public Client login(@RequestBody LoginRequest loginRequest) {
+		return clientService.login(loginRequest);
 	}
 	
 	/*public List<Animal> giveLike(String id) {

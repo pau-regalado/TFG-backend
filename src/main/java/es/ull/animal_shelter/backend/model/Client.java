@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Data
 @Document (collection = "clients")
 public class Client extends User  {

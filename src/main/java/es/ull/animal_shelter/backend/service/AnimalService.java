@@ -1,6 +1,8 @@
 package es.ull.animal_shelter.backend.service;
 
 import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class AnimalService {
 	private AnimalRepository animalRepository;
 	 
 	public Animal save(Animal animal) {
+		animal.setId(UUID.randomUUID().toString());
 		return animalRepository.save(animal);
 	}
 	

@@ -21,23 +21,5 @@ public class UserService {
     	Optional<Client> client = clientRepository.findByUsername(username);
         return client.isPresent() && client.get().getPassword().equals(password);
     }
-    
-    public Client save(Client client) {
-		return clientRepository.save(client);
-	}
-    
-    public Client findById(String id) {
-        return clientRepository.findById(id)
-        		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with id: " + id));
-    }
-
-    public Client findByUsername(String username) {
-        return clientRepository.findByUsername(username)
-        		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found with username: " + username));
-    }
-
-	public void deleteById(String id) {
-        clientRepository.deleteById(id);
-	}
 
 }

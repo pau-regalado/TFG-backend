@@ -1,27 +1,24 @@
 package es.ull.animal_shelter.backend.model;
 
-import lombok.Builder;
-
-import java.util.List;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
+import org.springframework.data.mongodb.core.index.Indexed;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 //@SuperBuilder
 //@Builder
 @Data
-public class User {
+public abstract class User {
 	private String id;
+	@Indexed(unique = true)
 	private String username;
 	private String password;
+	@Indexed(unique = true)
 	private String email;
 }
 

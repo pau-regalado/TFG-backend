@@ -8,5 +8,7 @@ import java.util.Optional;
 
 public interface ClientRepository extends MongoRepository<Client, String> {
     Optional<Client> findByUsername(String username);
+
+    Optional<Client> findByUsernameAndPassword(String username, String password);
     //Optional<Client> findByName(String client);
 }
