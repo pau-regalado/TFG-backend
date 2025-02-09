@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
 
       - name: Cache SonarQube packages
         uses: actions/cache@v4
@@ -46,22 +46,16 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      # Instalar mongosh desde los repositorios oficiales de Ubuntu
-      - name: Install MongoDB Shell (mongosh)
+      - name: Wait for MongoDB to be available
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gnupg
-          curl -fsSL https://pgp.mongodb.com/server-5.0.asc | sudo gpg -o /etc/apt/trusted.gpg.d/mongodb.asc
-          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-          sudo apt-get update
-          sudo apt-get install -y mongodb-org-shell
-
-      - name: Verify MongoDB connection
-        run: |
-          sleep 10
-          echo 'db.runCommand({ ping: 1 })' | mongosh localhost:27017/test --quiet
+          echo "Waiting for MongoDB to start..."
+          sleep 10 # Wait for MongoDB to start before continuing
 
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SPRING_PROFILES_ACTIVE: dev
+          SPRING_DATA_MONGODB_HOST: localhost
+          SPRING_DATA_MONGODB_PORT: 27017
+          SPRING_DATA_MONGODB_DATABASE: animals
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=pau-regalado_TFG-backend
