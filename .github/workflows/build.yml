@@ -46,14 +46,15 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      # Instalar mongosh (MongoDB Shell)
+      # Instalar mongosh desde los repositorios oficiales de Ubuntu
       - name: Install MongoDB Shell (mongosh)
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://downloads.mongodb.com/compass/mongosh-1.9.0-linux-x86_64.tgz
-          tar -xvzf mongosh-1.9.0-linux-x86_64.tgz
-          sudo mv mongosh-1.9.0-linux-x86_64/mongosh /usr/local/bin/
+          sudo apt-get install -y gnupg
+          curl -fsSL https://pgp.mongodb.com/server-5.0.asc | sudo gpg -o /etc/apt/trusted.gpg.d/mongodb.asc
+          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+          sudo apt-get update
+          sudo apt-get install -y mongodb-org-shell
 
       - name: Verify MongoDB connection
         run: |
