@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -30,6 +30,7 @@
 		<java.version>17</java.version>
 		<sonar.organization>pau-regalado-1</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.jacoco.reportPaths>target/jacoco.exec</sonar.jacoco.reportPaths> <!-- Reporte de Jacoco -->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -40,7 +41,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -51,26 +51,41 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Mokito -->
 		<dependency>
-	        <groupId>org.mockito</groupId>
-	        <artifactId>mockito-core</artifactId>
-	        <scope>test</scope>
-	    </dependency>
-	
-	    <!-- JUnit 5 -->
-	    <dependency>
-	        <groupId>org.junit.jupiter</groupId>
-	        <artifactId>junit-jupiter</artifactId>
-	        <scope>test</scope>
-	    </dependency>
-    
-    
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- JUnit 5 -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!-- Jacoco para la cobertura de pruebas -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.8</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal> <!-- Prepara el agente para monitorear la cobertura -->
+							<goal>report</goal> <!-- Genera el reporte de cobertura -->
+						</goals>
+						<phase>test</phase> <!-- Ejecutar en la fase de prueba -->
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Otros plugins -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -83,6 +98,7 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -95,25 +111,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
-			<!-- Prueba -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.8</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- Prueba -->
 		</plugins>
 	</build>
-
-
-
 </project>
