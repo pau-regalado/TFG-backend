@@ -46,16 +46,19 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      # Instalar los clientes de MongoDB
-      - name: Install MongoDB Client
+      # Instalar mongosh (MongoDB Shell)
+      - name: Install MongoDB Shell (mongosh)
         run: |
           sudo apt-get update
-          sudo apt-get install -y mongodb-clients
+          sudo apt-get install -y wget
+          wget https://downloads.mongodb.com/compass/mongosh-1.9.0-linux-x86_64.tgz
+          tar -xvzf mongosh-1.9.0-linux-x86_64.tgz
+          sudo mv mongosh-1.9.0-linux-x86_64/mongosh /usr/local/bin/
 
       - name: Verify MongoDB connection
         run: |
           sleep 10
-          echo 'db.runCommand({ ping: 1 })' | mongo localhost:27017/test --quiet
+          echo 'db.runCommand({ ping: 1 })' | mongosh localhost:27017/test --quiet
 
       - name: Build and analyze
         env:
