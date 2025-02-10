@@ -32,7 +32,7 @@ class AnimalServiceTest {
         MockitoAnnotations.openMocks(this);
 
         animal = new Animal();
-        animal.setId("123");
+        animal.setId("124");
         animal.setName("John");
         animal.setColor("negro");
         animal.setDescription(null);
@@ -43,10 +43,10 @@ class AnimalServiceTest {
         animal.setSterile(true);
         animal.setDisability(false);
 
-        when(animalRepository.findById("123")).thenReturn(Optional.of(animal));
+        when(animalRepository.findById("124")).thenReturn(Optional.of(animal));
         when(animalRepository.findAll()).thenReturn(List.of(animal));
         when(animalRepository.save(any(Animal.class))).thenReturn(animal);
-        doNothing().when(animalRepository).deleteById("123");
+        doNothing().when(animalRepository).deleteById("124");
     }
 
     @Test
@@ -59,21 +59,21 @@ class AnimalServiceTest {
 
     @Test
     void testFindById() {
-        Animal result = animalService.findById("123");
+        Animal result = animalService.findById("124");
         assertNotNull(result);
-        assertEquals("123", result.getId());
+        assertEquals("124", result.getId());
     }
 
     @Test
     void testDeleteById() {
-        assertDoesNotThrow(() -> animalService.deleteById("123"));
-        verify(animalRepository, times(1)).deleteById("123");
+        assertDoesNotThrow(() -> animalService.deleteById("124"));
+        verify(animalRepository, times(1)).deleteById("124");
     }
 
     @Test
     void testUpdateAnimal() {
         Animal updatedAnimal = new Animal();
-        updatedAnimal.setId("123");
+        updatedAnimal.setId("124");
         updatedAnimal.setName("John");
 
         Animal result = animalService.save(updatedAnimal);
