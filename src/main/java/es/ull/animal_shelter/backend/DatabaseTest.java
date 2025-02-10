@@ -57,7 +57,7 @@ public class DatabaseTest {
         LogManager.getLogger(this.getClass()).warn("        ------- animals");
 
         Client[] clientsLogin = {
-                Client.builder().username("Nico20").email("Nico20@gmail.com").password("admin").build(),
+                Client.builder().username("Nico20").email("Nico20@gmail.com").password("admin").animalWL(List.of(animals[0])).build(),
                 Client.builder().username("PabloReyes30").email("PabloReyes30@gmail.com").password("admin").build(),
                 Client.builder().username("PauRegalado01").email("PauRegalado01@gmail.com").password("admin").build(),
                 Client.builder().username("Cami87").email("Cami87@gmail.com").password("admin").build(),
