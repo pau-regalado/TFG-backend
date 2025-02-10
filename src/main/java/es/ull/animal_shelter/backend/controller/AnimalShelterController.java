@@ -1,5 +1,6 @@
 package es.ull.animal_shelter.backend.controller;
 
+import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.model.AnimalShelter;
 import es.ull.animal_shelter.backend.model.Client;
 import es.ull.animal_shelter.backend.service.AnimalShelterService;
@@ -34,6 +35,11 @@ public class AnimalShelterController {
         animalShelterService.findAll().stream().map(a -> a)
                 .forEach(a -> System.out.print(a.toString()));
         return animalShelterService.findAll();
+    }
+
+    @PostMapping("/login")
+    public AnimalShelter login(@RequestBody LoginRequest loginRequest) {
+        return animalShelterService.login(loginRequest);
     }
 
 }

@@ -9,4 +9,6 @@ import es.ull.animal_shelter.backend.model.AnimalShelter;
 @Repository
 public interface AnimalShelterRepository extends MongoRepository<AnimalShelter, String> {
 	Optional<AnimalShelter> findByName(String name);
+
+    Optional<AnimalShelter> findByUsernameAndPassword(String username, String password);
 }

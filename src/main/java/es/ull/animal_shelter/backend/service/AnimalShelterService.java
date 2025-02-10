@@ -1,5 +1,6 @@
 package es.ull.animal_shelter.backend.service;
 
+import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,11 @@ public class AnimalShelterService {
 
     public List<AnimalShelter> findAll() {
         return animalShelterRepository.findAll();
+    }
+
+    public AnimalShelter login(LoginRequest loginRequest) {
+        return animalShelterRepository.findByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
     }
 
 }
