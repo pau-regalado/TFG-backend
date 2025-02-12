@@ -3,6 +3,7 @@ package es.ull.animal_shelter.backend.controller;
 import java.util.List;
 
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
+import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,11 @@ public class ClientController {
 	@PostMapping("/login")
 	public Client login(@RequestBody LoginRequest loginRequest) {
 		return clientService.login(loginRequest);
+	}
+
+	@PostMapping("/register")
+	public Client register(@RequestBody RegisterClientRequest registerClientRequest) {
+		return clientService.register(registerClientRequest);
 	}
 	
 	/*public List<Animal> giveLike(String id) {

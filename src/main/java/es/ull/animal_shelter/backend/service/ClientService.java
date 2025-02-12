@@ -3,6 +3,7 @@ package es.ull.animal_shelter.backend.service;
 import java.util.List;
 
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
+import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import es.ull.animal_shelter.backend.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,11 @@ public class ClientService {
     public Client login(LoginRequest loginRequest) {
         return clientRepository.findByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found"));
+    }
+
+    public Client register(RegisterClientRequest registerClientRequest) {
+        Client client = new Client().fromRegisterClientRequest(registerClientRequest);
+        return this.save(client);
     }
     
     /*public List<Animal> giveLike(String id) {
