@@ -1,6 +1,7 @@
 package es.ull.animal_shelter.backend.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -27,5 +28,4 @@ public class Animal {
 	private Integer age;
 	private Boolean sterile;
 	private Boolean disability;
-	private String animal_shelter;
 }

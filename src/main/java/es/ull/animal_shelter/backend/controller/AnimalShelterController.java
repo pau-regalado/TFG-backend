@@ -25,11 +25,6 @@ public class AnimalShelterController {
         return animalShelter;
     }
 
-	/*@GetMapping("/{id}")
-	public Client findByUsername(@PathVariable String id) {
-		return clientService.findByUsername(id);
-	}*/
-
     @GetMapping
     public List<AnimalShelter> findAll() {
         animalShelterService.findAll().stream().map(a -> a)
