@@ -67,11 +67,11 @@ public class DatabaseTest {
         LogManager.getLogger(this.getClass()).warn("        ------- clients");
 
         AnimalShelter[] animalShelters = {
-                AnimalShelter.builder().name("Rescue1").location("La Laguna").username("Nico30").password("admin").numberPhone(612345678).build(),
-                AnimalShelter.builder().name("Rescue2").location("Santa Cruz").numberPhone(612345678).build(),
-                AnimalShelter.builder().name("Rescue3").location("La Orotava").numberPhone(612345678).build(),
-                AnimalShelter.builder().name("Rescue4").location("El Sauzal").numberPhone(612345678).build(),
-                AnimalShelter.builder().name("Rescue5").location("Los Cristianos").numberPhone(612345678).build()
+                AnimalShelter.builder().name("Rescue1").location("La Laguna").username("Nico30").password("admin").numberPhone(612345678).animals(List.of(animals[0])).build(),
+                AnimalShelter.builder().name("Rescue2").location("Santa Cruz").numberPhone(612345678).animals(List.of(animals[1])).build(),
+                AnimalShelter.builder().name("Rescue3").location("La Orotava").numberPhone(612345678).animals(List.of(animals[2])).build(),
+                AnimalShelter.builder().name("Rescue4").location("El Sauzal").numberPhone(612345678).animals(List.of(animals[3])).build(),
+                AnimalShelter.builder().name("Rescue5").location("Los Cristianos").numberPhone(612345678).animals(List.of(animals[4])).build()
         };
         this.animalShelterRepository.saveAll(List.of(animalShelters));
         LogManager.getLogger(this.getClass()).warn("        ------- animalShelters");

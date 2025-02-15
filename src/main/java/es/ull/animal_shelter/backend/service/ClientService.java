@@ -4,13 +4,14 @@ import java.util.List;
 
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
+import es.ull.animal_shelter.backend.repository.AnimalRepository;
 import es.ull.animal_shelter.backend.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import es.ull.animal_shelter.backend.model.Client;
-import es.ull.animal_shelter.backend.model.User;
+import es.ull.animal_shelter.backend.model.Animal;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -18,6 +19,8 @@ public class ClientService {
 
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private AnimalRepository animalRepository;
     
     public Client save(Client client) {
 		return clientRepository.save(client);	
@@ -41,22 +44,38 @@ public class ClientService {
         Client client = new Client().fromRegisterClientRequest(registerClientRequest);
         return this.save(client);
     }
-    
-    /*public List<Animal> giveLike(String id) {
-    	
-        Animal animal = animalRepository.findById(id);
-        Client client = clientRepository.findById(id);
+
+    public Client addAnimalToWishList(String clientId, String animalId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found with ID: " + clientId));
+
+        Animal animal = animalRepository.findById(animalId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal not found with ID: " + animalId));
 
         if (!client.getAnimalWL().contains(animal)) {
-        	client.getAnimalWL().add(animal);
+            client.getAnimalWL().add(animal);
         }
+        return clientRepository.save(client);
+    }
 
-        clientRepository.save(client);
 
+    public List<Animal> viewAnimals(String clientId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found with ID: " + clientId));
         return client.getAnimalWL();
-    }*/
+    }
 
+    public Animal deleteAnimalFromWishList(String clientId, String animalId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found with ID: " + clientId));
 
+        Animal animal = animalRepository.findById(animalId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal not found with ID: " + animalId));
+
+        client.getAnimalWL().remove(animal);
+        clientRepository.save(client);
+        return animal;
+    }
 }
 
 

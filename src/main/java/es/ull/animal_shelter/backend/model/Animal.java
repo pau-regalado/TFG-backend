@@ -27,4 +27,5 @@ public class Animal {
 	private Integer age;
 	private Boolean sterile;
 	private Boolean disability;
+	private String animal_shelter;
 }

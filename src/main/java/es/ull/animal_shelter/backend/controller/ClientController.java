@@ -27,11 +27,6 @@ public class ClientController {
 		return client;
 	}
 	
-	/*@GetMapping("/{id}")
-	public Client findByUsername(@PathVariable String id) {
-		return clientService.findByUsername(id);
-	}*/
-	
 	@GetMapping
 	public List<Client> findAll() {
 		clientService.findAll().stream().map(a -> a)
@@ -48,9 +43,19 @@ public class ClientController {
 	public Client register(@RequestBody RegisterClientRequest registerClientRequest) {
 		return clientService.register(registerClientRequest);
 	}
-	
-	/*public List<Animal> giveLike(String id) {
-		return clientService.giveLike(id);
-	}*/
 
+	@PostMapping("/{clientId}/wishList/{animalId}")
+	public Client addAnimalToWishList(@PathVariable String clientId, @PathVariable String animalId) {
+		return clientService.addAnimalToWishList(clientId, animalId);
+	}
+
+	@GetMapping("/{clientId}/viewWishList")
+	public List<Animal> viewAnimals(@PathVariable String clientId) {
+		return clientService.viewAnimals(clientId);
+	}
+
+	@DeleteMapping("/{clientId}/wishList/{animalId}")
+	public Animal deleteAnimalFromWishList(@PathVariable String clientId, @PathVariable String animalId) {
+		return clientService.deleteAnimalFromWishList(clientId, animalId);
+	}
 }
