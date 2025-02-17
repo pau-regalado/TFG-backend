@@ -21,5 +21,5 @@ public class AnimalShelter extends User {
 	private String location;
 	private Integer numberPhone;
 	@DBRef
-	private List<Animal> animals;
+	private List<Animal> animalWL;
 }

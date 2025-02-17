@@ -32,6 +32,11 @@ public class AnimalShelterController {
         return animalShelterService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public AnimalShelter findById(@PathVariable String id) {
+        return animalShelterService.findById(id);
+    }
+
     @PostMapping("/login")
     public AnimalShelter login(@RequestBody LoginRequest loginRequest) {
         return animalShelterService.login(loginRequest);
