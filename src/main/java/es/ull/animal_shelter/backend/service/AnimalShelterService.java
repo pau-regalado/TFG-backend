@@ -1,6 +1,7 @@
 package es.ull.animal_shelter.backend.service;
 
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
+import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,9 @@ public class AnimalShelterService {
 
     @Autowired
     private AnimalShelterRepository animalShelterRepository;
+
+    @Autowired
+    private AnimalService animalService;
     
     public void save(AnimalShelter shelter) {
         animalShelterRepository.save(shelter);
@@ -38,5 +42,13 @@ public class AnimalShelterService {
     public AnimalShelter findById(String idAnimalShelter) {
         return animalShelterRepository.findById(idAnimalShelter)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not found"));
+    }
+
+    public Animal addAnimal(String id, Animal animalData) {
+        Animal animal = this.animalService.save(animalData);
+        AnimalShelter animalShelter = findById(id);
+        animalShelter.getAnimalWL().add(animal);
+        this.animalShelterRepository.save(animalShelter);
+        return animal;
     }
 }

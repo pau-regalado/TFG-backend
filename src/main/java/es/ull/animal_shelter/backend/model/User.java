@@ -10,8 +10,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-//@SuperBuilder
-//@Builder
 @Data
 public abstract class User {
 	private String id;

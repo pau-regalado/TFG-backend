@@ -1,6 +1,7 @@
 package es.ull.animal_shelter.backend.controller;
 
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
+import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.AnimalShelter;
 import es.ull.animal_shelter.backend.model.Client;
 import es.ull.animal_shelter.backend.service.AnimalShelterService;
@@ -35,6 +36,11 @@ public class AnimalShelterController {
     @GetMapping("/{id}")
     public AnimalShelter findById(@PathVariable String id) {
         return animalShelterService.findById(id);
+    }
+
+    @PostMapping("/{id}/addAnimal")
+    public Animal addAnimal(@PathVariable String id, @RequestBody Animal animalData) {
+        return animalShelterService.addAnimal(id, animalData);
     }
 
     @PostMapping("/login")

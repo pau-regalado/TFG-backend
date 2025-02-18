@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.service.AnimalService;
-//import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1")
-//@RequiredArgsConstructor
 public class AnimalController {
 	@Autowired
 	private AnimalService animalService;
@@ -31,12 +29,6 @@ public class AnimalController {
 		animalService.save(animal);
 		return animal;
 	}
-
-	/*@PostMapping("/test/animals")
-	public Animal save(@RequestBody Animal animal) {
-		animalService.save(animal);
-		return animal;
-	}*/
 	
 	@GetMapping("/animals")
 	public List<Animal> findAll() {
