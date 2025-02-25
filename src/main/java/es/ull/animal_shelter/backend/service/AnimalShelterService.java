@@ -1,6 +1,8 @@
 package es.ull.animal_shelter.backend.service;
 
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
+import es.ull.animal_shelter.backend.controller.dto.RegisterAnimalShelterRequest;
+import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +66,10 @@ public class AnimalShelterService {
         return animalShelterRepository.findAll().stream()
                 .filter(shelter -> shelter.getAnimalWL().contains(animal)).findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not found"));
+    }
+
+    public AnimalShelter register(RegisterAnimalShelterRequest registerAnimalShelterRequest) {
+        AnimalShelter animalShelter = new AnimalShelter().fromRegisterAnimalShelterRequest(registerAnimalShelterRequest);
+        return animalShelterRepository.save(animalShelter);
     }
 }

@@ -6,6 +6,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RegisterClientRequest extends RegisterUserRequest {
-    private String lastName;
+public class RegisterAnimalShelterRequest extends RegisterUserRequest {
+    private String location;
+    private Integer numberPhone;
 }

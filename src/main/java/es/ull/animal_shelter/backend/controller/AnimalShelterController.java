@@ -1,6 +1,8 @@
 package es.ull.animal_shelter.backend.controller;
 
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
+import es.ull.animal_shelter.backend.controller.dto.RegisterAnimalShelterRequest;
+import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.AnimalShelter;
 import es.ull.animal_shelter.backend.model.Client;
@@ -25,6 +27,11 @@ public class AnimalShelterController {
     public AnimalShelter save(@RequestBody AnimalShelter animalShelter) {
         animalShelterService.save(animalShelter);
         return animalShelter;
+    }
+
+    @PostMapping("/register")
+    public AnimalShelter register(@RequestBody RegisterAnimalShelterRequest registerAnimalShelterRequest) {
+        return animalShelterService.register(registerAnimalShelterRequest);
     }
 
     @GetMapping

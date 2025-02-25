@@ -1,6 +1,7 @@
 package es.ull.animal_shelter.backend.model;
 
 
+import es.ull.animal_shelter.backend.controller.dto.RegisterAnimalShelterRequest;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,4 +25,14 @@ public class AnimalShelter extends User {
 	private List<Animal> animalWL;
 
 
+	public AnimalShelter fromRegisterAnimalShelterRequest(RegisterAnimalShelterRequest request) {
+		return AnimalShelter.builder().name(request.getName())
+				.username(request.getUsername())
+				.password(request.getPassword())
+				.email(request.getEmail())
+				.location(request.getLocation())
+				.numberPhone(request.getNumberPhone())
+				.animalWL(List.of())
+				.build();
+	}
 }
