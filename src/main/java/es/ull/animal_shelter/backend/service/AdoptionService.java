@@ -28,14 +28,16 @@ public class AdoptionService {
 
     public Adoption save(AdoptionDetails adoptionDetails) {
         Animal animal = animalService.findById(adoptionDetails.getAnimalId());
-        AnimalShelter animalShelter = animalShelterService.findById(adoptionDetails.getAnimalShelterId());
+        AnimalShelter animalShelter = animalShelterService.findByAnimal(animal);
         Client client = clientService.findById(adoptionDetails.getClientId());
         Adoption adoption = Adoption.builder()
                 .animal(animal).client(client).animalShelter(animalShelter)
                 .build();
         adoption.setId(UUID.randomUUID().toString());
         adoption.setDate(LocalDateTime.now());
-        return adoptionRepository.save(adoption);
+        Adoption savedAdoption = adoptionRepository.save(adoption);
+        animalShelterService.deleteAnimal(animalShelter.getId(), animal.getId());
+        return savedAdoption;
     }
 
     public List<Adoption> findAll() {

@@ -10,5 +10,4 @@ import lombok.Data;
 public class AdoptionDetails {
     private String animalId;
     private String clientId;
-    private String animalShelterId;
 }

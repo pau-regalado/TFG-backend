@@ -59,4 +59,10 @@ public class AnimalShelterService {
         this.animalService.deleteById(animalId);
         return animalShelterUpdate;
     }
+
+    public AnimalShelter findByAnimal(Animal animal) {
+        return animalShelterRepository.findAll().stream()
+                .filter(shelter -> shelter.getAnimalWL().contains(animal)).findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not found"));
+    }
 }
