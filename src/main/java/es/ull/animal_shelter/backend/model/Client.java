@@ -22,6 +22,7 @@ public class Client extends User  {
 	@DBRef
 	private List<Animal> animalWL;
 
+
 	public Client fromRegisterClientRequest(RegisterClientRequest request) {
 		return Client.builder().name(request.getName())
 				.lastName(request.getLastName())

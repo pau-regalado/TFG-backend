@@ -22,4 +22,6 @@ public class AnimalShelter extends User {
 	private Integer numberPhone;
 	@DBRef
 	private List<Animal> animalWL;
+
+
 }
