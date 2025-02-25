@@ -1,8 +1,10 @@
 package es.ull.animal_shelter.backend;
 
+import es.ull.animal_shelter.backend.model.Adoption;
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.AnimalShelter;
 import es.ull.animal_shelter.backend.model.Client;
+import es.ull.animal_shelter.backend.repository.AdoptionRepository;
 import es.ull.animal_shelter.backend.repository.AnimalRepository;
 import es.ull.animal_shelter.backend.repository.AnimalShelterRepository;
 import es.ull.animal_shelter.backend.repository.ClientRepository;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Profile("dev")
@@ -19,15 +22,18 @@ public class DatabaseTest {
     private AnimalRepository animalRepository;
     private ClientRepository clientRepository;
     private AnimalShelterRepository animalShelterRepository;
+    private AdoptionRepository adoptionRepository;
 
 
     @Autowired
     public DatabaseTest(AnimalRepository animalRepository,
                         ClientRepository clientRepository,
-                        AnimalShelterRepository animalShelterRepository) {
+                        AnimalShelterRepository animalShelterRepository,
+                        AdoptionRepository adoptionRepository) {
         this.animalRepository = animalRepository;
         this.clientRepository = clientRepository;
         this.animalShelterRepository = animalShelterRepository;
+        this.adoptionRepository = adoptionRepository;
         this.deleteAllAndInitializeAndSeedDataBase();
     }
 
@@ -40,6 +46,7 @@ public class DatabaseTest {
         this.animalRepository.deleteAll();
         this.clientRepository.deleteAll();
         this.animalShelterRepository.deleteAll();
+        this.adoptionRepository.deleteAll();
         LogManager.getLogger(this.getClass()).warn("------- Delete All -----------");
     }
 
@@ -57,11 +64,11 @@ public class DatabaseTest {
         LogManager.getLogger(this.getClass()).warn("        ------- animals");
 
         Client[] clientsLogin = {
-                Client.builder().username("Nico20").email("Nico20@gmail.com").password("admin").animalWL(List.of(animals[0])).build(),
-                Client.builder().username("PabloReyes30").email("PabloReyes30@gmail.com").password("admin").build(),
-                Client.builder().username("PauRegalado01").email("PauRegalado01@gmail.com").password("admin").build(),
-                Client.builder().username("Cami87").email("Cami87@gmail.com").password("admin").build(),
-                Client.builder().username("NereaCampos99").email("NereaCampos99@gmail.com").password("admin").build()
+                Client.builder().name("Nico").lastName("Perez").username("Nico20").email("Nico20@gmail.com").password("admin").animalWL(List.of(animals[0])).build(),
+                Client.builder().name("Pablo").lastName("Reyes").username("PabloReyes30").email("PabloReyes30@gmail.com").password("admin").build(),
+                Client.builder().name("Paula").lastName("Regalado").username("PauRegalado01").email("PauRegalado01@gmail.com").password("admin").build(),
+                Client.builder().name("Camila").lastName("Tejero").username("Cami87").email("Cami87@gmail.com").password("admin").build(),
+                Client.builder().name("Nerea").lastName("Campos").username("NereaCampos99").email("NereaCampos99@gmail.com").password("admin").build()
         };
         this.clientRepository.saveAll(List.of(clientsLogin));
         LogManager.getLogger(this.getClass()).warn("        ------- clients");
@@ -75,5 +82,12 @@ public class DatabaseTest {
         };
         this.animalShelterRepository.saveAll(List.of(animalShelters));
         LogManager.getLogger(this.getClass()).warn("        ------- animalShelters");
+
+        Adoption[] adoptions = {
+                Adoption.builder().animalShelter(animalShelters[0]).animal(animals[0]).client(clientsLogin[0]).date(LocalDateTime.now()).build(),
+                Adoption.builder().animalShelter(animalShelters[1]).animal(animals[1]).client(clientsLogin[1]).date(LocalDateTime.of(2024,12,12,14,30)).build()
+        };
+        this.adoptionRepository.saveAll(List.of(adoptions));
+        LogManager.getLogger(this.getClass()).warn("        ------- adoptions");
     }
 }

@@ -1,5 +1,6 @@
 package es.ull.animal_shelter.backend.controller;
 
+import es.ull.animal_shelter.backend.controller.dto.AdoptionDetails;
 import es.ull.animal_shelter.backend.model.Adoption;
 import es.ull.animal_shelter.backend.service.AdoptionService;
 import org.apache.logging.log4j.LogManager;
@@ -16,10 +17,9 @@ public class AdoptionController {
     private AdoptionService adoptionService;
 
     @PostMapping
-    public Adoption save(@RequestBody Adoption adoption) {
-        LogManager.getLogger(this.getClass()).warn(adoption.toString());
-        adoptionService.save(adoption);
-        return adoption;
+    public Adoption save(@RequestBody AdoptionDetails adoptiondetails) {
+        LogManager.getLogger(this.getClass()).warn(adoptiondetails.toString());
+        return adoptionService.save(adoptiondetails);
     }
 
     @GetMapping

@@ -30,6 +30,11 @@ public class ClientService {
         return clientRepository.findByUsername(username)
         		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found with username: " + username));
     }
+
+    public Client findById(String id) {
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found with id: " + id));
+    }
     
     public List<Client> findAll() {
         return clientRepository.findAll();
