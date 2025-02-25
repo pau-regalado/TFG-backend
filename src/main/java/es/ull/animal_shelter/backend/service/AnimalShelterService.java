@@ -51,4 +51,12 @@ public class AnimalShelterService {
         this.animalShelterRepository.save(animalShelter);
         return animal;
     }
+
+    public AnimalShelter deleteAnimal(String shelterId, String animalId) {
+        AnimalShelter animalShelter = findById(shelterId);  // Obtener refugio
+        animalShelter.getAnimalWL().removeIf(animal -> animal.getId().equals(animalId));  // Eliminar el animal
+        AnimalShelter animalShelterUpdate = animalShelterRepository.save(animalShelter);
+        this.animalService.deleteById(animalId);
+        return animalShelterUpdate;
+    }
 }

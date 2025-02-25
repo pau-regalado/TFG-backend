@@ -6,6 +6,7 @@ import es.ull.animal_shelter.backend.model.AnimalShelter;
 import es.ull.animal_shelter.backend.model.Client;
 import es.ull.animal_shelter.backend.service.AnimalShelterService;
 import es.ull.animal_shelter.backend.service.ClientService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,11 @@ public class AnimalShelterController {
     @PostMapping("/{id}/addAnimal")
     public Animal addAnimal(@PathVariable String id, @RequestBody Animal animalData) {
         return animalShelterService.addAnimal(id, animalData);
+    }
+
+    @DeleteMapping("/{shelterId}/animals/{animalId}")
+    public ResponseEntity<AnimalShelter> deleteAnimal(@PathVariable String shelterId, @PathVariable String animalId) {
+        return ResponseEntity.ok(animalShelterService.deleteAnimal(shelterId, animalId));  // Llamada a servicio
     }
 
     @PostMapping("/login")
