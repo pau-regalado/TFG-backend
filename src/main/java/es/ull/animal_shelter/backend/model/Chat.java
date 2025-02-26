@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -17,9 +18,13 @@ import java.util.List;
 public class Chat {
     @Id
     private String id;
+    @DBRef
     private Animal animal;
+    @DBRef
     private AnimalShelter animalShelter;
+    @DBRef
     private Client client;
-    private List<Message> message;
+    @DBRef
+    private List<Message> messages;
 
 }

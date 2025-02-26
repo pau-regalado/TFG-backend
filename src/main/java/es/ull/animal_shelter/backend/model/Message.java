@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -17,7 +18,7 @@ import java.util.Date;
 public class Message {
     @Id
     private String id;
-    private Date date;
+    private LocalDateTime date;
     private String message;
     private boolean userType;
 }
