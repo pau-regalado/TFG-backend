@@ -51,5 +51,4 @@ public class AnimalController {
 	public void update(@RequestBody Animal animal) {
 		animalService.save(animal);
 	}
-
 }
