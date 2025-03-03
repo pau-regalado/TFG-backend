@@ -58,4 +58,10 @@ public class ClientController {
 	public Animal deleteAnimalFromWishList(@PathVariable String clientId, @PathVariable String animalId) {
 		return clientService.deleteAnimalFromWishList(clientId, animalId);
 	}
+
+	@GetMapping("/{clientId}/recommendations")
+	public List<Animal> getRecommendations(@PathVariable String clientId) {
+		return clientService.getRecommendations(clientId);
+	}
+
 }

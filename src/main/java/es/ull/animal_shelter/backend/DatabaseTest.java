@@ -54,7 +54,7 @@ public class DatabaseTest {
         LogManager.getLogger(this.getClass()).warn("------- Initial Load from JAVA -----------");
 
         Animal[] animals = {
-                Animal.builder().id("123").name("Lola").color("marron").size("mediano").race("mestizo").description("Muy carinosa").birth_date("02-02-2020").entryDate("17-10-2024").sex("Hembra").age(5).sterile(true).disability(false).build(),
+                Animal.builder().id("123").name("Lola").color("marrón").size("mediano").race("mestizo").description("Muy carinosa").birth_date("02-02-2020").entryDate("17-10-2024").sex("Hembra").age(5).sterile(true).disability(false).build(),
                 Animal.builder().id("124").name("Max").color("negro").size("grande").race("labrador").description("Juguetón y enérgico").birth_date("15-06-2019").entryDate("20-11-2024").sex("Macho").age(5).sterile(true).disability(false).build(),
                 Animal.builder().id("125").name("Nala").color("blanco").size("pequeño").race("poodle").description("Dócil y amigable").birth_date("08-09-2021").entryDate("25-12-2024").sex("Hembra").age(3).sterile(false).disability(false).build(),
                 Animal.builder().id("126").name("Rocky").color("marrón y blanco").size("mediano").race("beagle").description("Curioso y explorador").birth_date("22-03-2020").entryDate("10-10-2024").sex("Macho").age(4).sterile(true).disability(false).build(),

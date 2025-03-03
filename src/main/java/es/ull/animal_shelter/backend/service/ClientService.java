@@ -1,11 +1,13 @@
 package es.ull.animal_shelter.backend.service;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import es.ull.animal_shelter.backend.repository.AnimalRepository;
 import es.ull.animal_shelter.backend.repository.ClientRepository;
+import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -81,6 +83,69 @@ public class ClientService {
         clientRepository.save(client);
         return animal;
     }
+
+    public List<Animal> getRecommendations(String clientId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente no encontrado"));
+
+        List<Animal> likedAnimals = client.getAnimalWL(); // Lista de animales a los que le dio "me gusta"
+
+        if (likedAnimals.isEmpty()) {
+            return Collections.emptyList(); // Si no ha dado "me gusta", no hay recomendaciones
+        }
+
+        // 1️⃣ Calcular características promedio
+        Animal averageAnimal = calculateAverageAnimal(likedAnimals);
+
+        // 2️⃣ Obtener todos los animales
+        List<Animal> allAnimals = animalRepository.findAll();
+
+        // 3️⃣ Calcular similitud y ordenar
+        return allAnimals.stream()
+                .filter(animal -> !likedAnimals.contains(animal)) // Excluir los que ya le gustan
+                .sorted(Comparator.comparingDouble(a -> calculateSimilarity((Animal) a, averageAnimal)).reversed())
+                .limit(5) // Devolver solo los 5 más parecidos
+                .collect(Collectors.toList());
+    }
+
+    private Animal calculateAverageAnimal(List<Animal> animals) {
+        int totalAge = 0;
+        Map<String, Integer> colorCount = new HashMap<>();
+        Map<String, Integer> sizeCount = new HashMap<>();
+        Map<String, Integer> raceCount = new HashMap<>();
+
+        for (Animal animal : animals) {
+            totalAge += animal.getAge();
+
+            colorCount.put(animal.getColor(), colorCount.getOrDefault(animal.getColor(), 0) + 1);
+            sizeCount.put(animal.getSize(), sizeCount.getOrDefault(animal.getSize(), 0) + 1);
+            raceCount.put(animal.getRace(), raceCount.getOrDefault(animal.getRace(), 0) + 1);
+        }
+
+        int averageAge = totalAge / animals.size();
+        String mostCommonColor = getMostCommon(colorCount);
+        String mostCommonSize = getMostCommon(sizeCount);
+        String mostCommonRace = getMostCommon(raceCount);
+
+        return new Animal(null, null, mostCommonColor, mostCommonSize, mostCommonRace, null, null, null, null, averageAge, null, null, null);
+    }
+
+    private String getMostCommon(Map<String, Integer> map) {
+        return map.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    }
+
+    private double calculateSimilarity(Animal a, Animal reference) {
+        double ageSimilarity = 1.0 - (Math.abs(a.getAge() - reference.getAge()) / 10.0); // Normalizar edad
+        double colorSimilarity = a.getColor().equals(reference.getColor()) ? 1.0 : 0.0;
+        double sizeSimilarity = a.getSize().equals(reference.getSize()) ? 1.0 : 0.0;
+        double raceSimilarity = a.getRace().equals(reference.getRace()) ? 1.0 : 0.0;
+
+        return (ageSimilarity * 0.4) + (colorSimilarity * 0.2) + (sizeSimilarity * 0.2) + (raceSimilarity * 0.2);
+    }
+
 }
 
 
