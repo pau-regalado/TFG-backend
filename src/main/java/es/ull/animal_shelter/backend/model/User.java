@@ -18,5 +18,6 @@ public abstract class User {
 	private String password;
 	@Indexed(unique = true)
 	private String email;
+
 }
 
