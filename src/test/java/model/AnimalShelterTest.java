@@ -1,11 +1,14 @@
 package model;
 
 import es.ull.animal_shelter.backend.controller.dto.RegisterAnimalShelterRequest;
+import es.ull.animal_shelter.backend.model.Adoption;
+import es.ull.animal_shelter.backend.model.AdoptionStatus;
 import es.ull.animal_shelter.backend.model.AnimalShelter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 class AnimalShelterTest {
@@ -49,6 +52,7 @@ class AnimalShelterTest {
         assertEquals(123456789, shelter1.getNumberPhone());
         assertTrue(shelter1.getAnimalWL().isEmpty());
     }
+
 
     /*@Test
     void testToString() {

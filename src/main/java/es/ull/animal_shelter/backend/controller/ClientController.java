@@ -4,8 +4,6 @@ import java.util.List;
 
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
-import es.ull.animal_shelter.backend.model.Adoption;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import es.ull.animal_shelter.backend.model.Animal;
