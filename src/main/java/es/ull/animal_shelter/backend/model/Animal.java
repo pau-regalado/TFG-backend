@@ -30,6 +30,4 @@ public class Animal {
 	private Boolean sterile;
 	private Boolean disability;
 	private Binary image;
-
-
 }
