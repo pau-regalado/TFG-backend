@@ -76,12 +76,20 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.8</version>
 				<executions>
+					<!-- Prepara el agente de cobertura -->
 					<execution>
+						<id>prepare-agent</id>
 						<goals>
-							<goal>prepare-agent</goal> <!-- Prepara el agente para monitorear la cobertura -->
-							<goal>report</goal> <!-- Genera el reporte de cobertura -->
+							<goal>prepare-agent</goal>
 						</goals>
-						<phase>test</phase> <!-- Ejecutar en la fase de prueba -->
+					</execution>
+					<!-- Genera el informe después de las pruebas -->
+					<execution>
+						<id>report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

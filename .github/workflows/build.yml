@@ -58,4 +58,5 @@ jobs:
           SPRING_DATA_MONGODB_HOST: localhost
           SPRING_DATA_MONGODB_PORT: 27017
           SPRING_DATA_MONGODB_DATABASE: animals
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=pau-regalado_TFG-backend
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=pau-regalado_TFG-backend -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+
