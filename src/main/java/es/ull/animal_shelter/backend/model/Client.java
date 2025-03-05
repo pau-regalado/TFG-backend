@@ -32,5 +32,4 @@ public class Client extends User  {
 				.animalWL(animalWL)
 				.build();
 	}
-
 }

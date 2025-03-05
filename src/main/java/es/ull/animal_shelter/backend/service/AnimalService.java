@@ -2,15 +2,12 @@ package es.ull.animal_shelter.backend.service;
 
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.repository.AnimalRepository;
-
 
 @Service
 public class AnimalService {

@@ -25,7 +25,7 @@ public class AnimalController {
 	
 	@PostMapping("/animals")
 	public Animal save(@RequestBody Animal animal) {
-		LogManager.getLogger(this.getClass()).warn(animal.toString());
+		//LogManager.getLogger(this.getClass()).warn(animal.toString());
 		animalService.save(animal);
 		return animal;
 	}

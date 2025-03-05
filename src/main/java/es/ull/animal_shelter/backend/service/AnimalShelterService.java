@@ -62,9 +62,25 @@ public class AnimalShelterService {
         return animalShelterUpdate;
     }
 
+    public AnimalShelter deleteByAnimalId(String animalId) {
+        AnimalShelter animalShelter = this.findByAnimalId(animalId);  // Obtener refugio
+        animalShelter.getAnimalWL().removeIf(animal -> animal.getId().equals(animalId));  // Eliminar el animal
+        AnimalShelter animalShelterUpdate = animalShelterRepository.save(animalShelter);
+        this.animalService.deleteById(animalId);
+        return animalShelterUpdate;
+    }
+
     public AnimalShelter findByAnimal(Animal animal) {
         return animalShelterRepository.findAll().stream()
                 .filter(shelter -> shelter.getAnimalWL().contains(animal)).findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not found"));
+    }
+
+    public AnimalShelter findByAnimalId(String animalId) {
+        return animalShelterRepository.findAll().stream()
+                .filter(shelter -> shelter.getAnimalWL().stream()
+                        .anyMatch(animal -> animal.getId().equals(animalId)))  // Filtrar por animalId
+                .findFirst()
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not found"));
     }
 

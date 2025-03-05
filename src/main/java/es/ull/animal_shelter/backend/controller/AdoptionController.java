@@ -2,11 +2,9 @@ package es.ull.animal_shelter.backend.controller;
 
 import es.ull.animal_shelter.backend.controller.dto.AdoptionDetails;
 import es.ull.animal_shelter.backend.model.Adoption;
-import es.ull.animal_shelter.backend.model.AnimalShelter;
 import es.ull.animal_shelter.backend.service.AdoptionService;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +30,21 @@ public class AdoptionController {
     @GetMapping("/{id}")
     public Adoption findById(@PathVariable String id) {
         return adoptionService.findById(id);
+    }
+
+    @GetMapping("/animalShelter/{id}")
+    public List<Adoption> findByAnimalShelterId(@PathVariable String id) {
+        return adoptionService.findByAnimalShelterId(id);
+    }
+
+    @GetMapping("/{id}/confirm")
+    public Adoption confirmAdoption(@PathVariable String id) {
+        return adoptionService.confirmAdoptionRequest(id);
+    }
+
+    @GetMapping("/{id}/reject")
+    public Adoption rejectAdoption(@PathVariable String id) {
+        return adoptionService.rejectAdoptionRequest(id);
     }
 
 }

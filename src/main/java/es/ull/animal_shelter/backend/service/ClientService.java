@@ -7,7 +7,6 @@ import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import es.ull.animal_shelter.backend.repository.AnimalRepository;
 import es.ull.animal_shelter.backend.repository.ClientRepository;
-import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

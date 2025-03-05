@@ -1,11 +1,9 @@
 package es.ull.animal_shelter.backend.service;
 
 import es.ull.animal_shelter.backend.controller.dto.AdoptionDetails;
-import es.ull.animal_shelter.backend.model.Adoption;
-import es.ull.animal_shelter.backend.model.Animal;
-import es.ull.animal_shelter.backend.model.AnimalShelter;
-import es.ull.animal_shelter.backend.model.Client;
+import es.ull.animal_shelter.backend.model.*;
 import es.ull.animal_shelter.backend.repository.AdoptionRepository;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,13 +29,31 @@ public class AdoptionService {
         AnimalShelter animalShelter = animalShelterService.findByAnimal(animal);
         Client client = clientService.findById(adoptionDetails.getClientId());
         Adoption adoption = Adoption.builder()
-                .animal(animal).client(client).animalShelter(animalShelter)
+                .id(UUID.randomUUID().toString())
+                .animal(animal)
+                .client(client)
+                .animalShelter(animalShelter)
+                .date(LocalDateTime.now())
+                .status(AdoptionStatus.PENDING)
                 .build();
-        adoption.setId(UUID.randomUUID().toString());
-        adoption.setDate(LocalDateTime.now());
+        LogManager.getLogger(this.getClass()).warn(adoption.toString());
+        return adoptionRepository.save(adoption);
+    }
+
+    public Adoption confirmAdoptionRequest(String id) {
+        Adoption adoption = this.findById(id);
+        adoption.setStatus(AdoptionStatus.ACCEPTED); // El estado de la adopción comienza como PENDIENTE
+        adoption.setDate(LocalDateTime.now()); // Fecha de la solicitud
         Adoption savedAdoption = adoptionRepository.save(adoption);
-        animalShelterService.deleteAnimal(animalShelter.getId(), animal.getId());
+        animalShelterService.deleteByAnimalId(savedAdoption.getAnimal().getId());
         return savedAdoption;
+    }
+
+    public Adoption rejectAdoptionRequest(String id) {
+        Adoption adoption = this.findById(id);
+        adoption.setStatus(AdoptionStatus.REJECTED); // El estado de la adopción comienza como PENDIENTE
+        adoption.setDate(LocalDateTime.now()); // Fecha de la solicitud
+        return adoptionRepository.save(adoption);
     }
 
     public List<Adoption> findAll() {
@@ -47,5 +63,9 @@ public class AdoptionService {
     public Adoption findById(String id) {
         return adoptionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Adoption no encontrado con ID: " + id));
+    }
+
+    public List<Adoption> findByAnimalShelterId(String id) {
+        return adoptionRepository.findByAnimalShelterId(id);
     }
 }

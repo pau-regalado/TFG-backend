@@ -1,6 +1,8 @@
 package es.ull.animal_shelter.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.EnumNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.EnumNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +25,5 @@ public class Adoption {
     private Client client;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
+    private AdoptionStatus status;
 }

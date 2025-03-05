@@ -1,9 +1,6 @@
 package es.ull.animal_shelter.backend;
 
-import es.ull.animal_shelter.backend.model.Adoption;
-import es.ull.animal_shelter.backend.model.Animal;
-import es.ull.animal_shelter.backend.model.AnimalShelter;
-import es.ull.animal_shelter.backend.model.Client;
+import es.ull.animal_shelter.backend.model.*;
 import es.ull.animal_shelter.backend.repository.AdoptionRepository;
 import es.ull.animal_shelter.backend.repository.AnimalRepository;
 import es.ull.animal_shelter.backend.repository.AnimalShelterRepository;
@@ -75,17 +72,17 @@ public class DatabaseTest {
 
         AnimalShelter[] animalShelters = {
                 AnimalShelter.builder().name("Rescue1").location("La Laguna").username("Nico30").password("admin").numberPhone(612345678).animalWL(List.of(animals[0])).build(),
-                AnimalShelter.builder().name("Rescue2").location("Santa Cruz").numberPhone(612345678).animalWL(List.of(animals[1])).build(),
-                AnimalShelter.builder().name("Rescue3").location("La Orotava").numberPhone(612345678).animalWL(List.of(animals[2])).build(),
-                AnimalShelter.builder().name("Rescue4").location("El Sauzal").numberPhone(612345678).animalWL(List.of(animals[3])).build(),
-                AnimalShelter.builder().name("Rescue5").location("Los Cristianos").numberPhone(612345678).animalWL(List.of(animals[4])).build()
+                AnimalShelter.builder().name("Rescue2").location("Santa Cruz").username("rescue2").password("admin").numberPhone(612345678).animalWL(List.of(animals[1])).build(),
+                AnimalShelter.builder().name("Rescue3").location("La Orotava").username("rescue3").password("admin").numberPhone(612345678).animalWL(List.of(animals[2])).build(),
+                AnimalShelter.builder().name("Rescue4").location("El Sauzal").username("rescue4").password("admin").numberPhone(612345678).animalWL(List.of(animals[3])).build(),
+                AnimalShelter.builder().name("Rescue5").location("Los Cristianos").username("rescue5").password("admin").numberPhone(612345678).animalWL(List.of(animals[4])).build()
         };
         this.animalShelterRepository.saveAll(List.of(animalShelters));
         LogManager.getLogger(this.getClass()).warn("        ------- animalShelters");
 
         Adoption[] adoptions = {
-                Adoption.builder().animalShelter(animalShelters[0]).animal(animals[0]).client(clientsLogin[0]).date(LocalDateTime.now()).build(),
-                Adoption.builder().animalShelter(animalShelters[1]).animal(animals[1]).client(clientsLogin[1]).date(LocalDateTime.of(2024,12,12,14,30)).build()
+                Adoption.builder().animalShelter(animalShelters[0]).animal(animals[0]).client(clientsLogin[0]).date(LocalDateTime.now()).status(AdoptionStatus.PENDING).build(),
+                Adoption.builder().animalShelter(animalShelters[1]).animal(animals[1]).client(clientsLogin[1]).date(LocalDateTime.of(2024,12,12,14,30)).status(AdoptionStatus.PENDING).build()
         };
         this.adoptionRepository.saveAll(List.of(adoptions));
         LogManager.getLogger(this.getClass()).warn("        ------- adoptions");
