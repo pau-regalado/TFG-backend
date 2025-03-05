@@ -39,9 +39,9 @@ class AnimalServiceTest {
         animal.setBirth_date("20-03-2020");
         animal.setEntryDate("07-07-2024");
         animal.setSex("Macho");
-        animal.setAge(5);
+        animal.setAge(10);
         animal.setSterile(true);
-        animal.setDisability(false);
+        animal.setDisability(true);
 
         when(animalRepository.findById("124")).thenReturn(Optional.of(animal));
         when(animalRepository.findAll()).thenReturn(List.of(animal));
