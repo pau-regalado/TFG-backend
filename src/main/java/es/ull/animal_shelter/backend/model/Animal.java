@@ -29,5 +29,6 @@ public class Animal {
 	private Integer age;
 	private Boolean sterile;
 	private Boolean disability;
-	private Binary image;
+	private String imageUrl;
+
 }

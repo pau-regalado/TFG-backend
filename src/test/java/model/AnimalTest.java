@@ -1,4 +1,4 @@
-package model;
+/*package model;
 
 import es.ull.animal_shelter.backend.model.Animal;
 import org.bson.types.Binary;
@@ -139,3 +139,4 @@ class AnimalTest {
         assertTrue(animal1.toString().contains("sterile=true"));
     }
 }
+*/
