@@ -5,6 +5,7 @@ import es.ull.animal_shelter.backend.repository.AdoptionRepository;
 import es.ull.animal_shelter.backend.repository.AnimalRepository;
 import es.ull.animal_shelter.backend.repository.AnimalShelterRepository;
 import es.ull.animal_shelter.backend.repository.ClientRepository;
+import es.ull.animal_shelter.backend.service.ImageService;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -20,17 +21,20 @@ public class DatabaseTest {
     private ClientRepository clientRepository;
     private AnimalShelterRepository animalShelterRepository;
     private AdoptionRepository adoptionRepository;
+    private ImageService imageService;
 
 
     @Autowired
     public DatabaseTest(AnimalRepository animalRepository,
                         ClientRepository clientRepository,
                         AnimalShelterRepository animalShelterRepository,
-                        AdoptionRepository adoptionRepository) {
+                        AdoptionRepository adoptionRepository,
+                        ImageService imageService) {
         this.animalRepository = animalRepository;
         this.clientRepository = clientRepository;
         this.animalShelterRepository = animalShelterRepository;
         this.adoptionRepository = adoptionRepository;
+        this.imageService = imageService;
         this.deleteAllAndInitializeAndSeedDataBase();
     }
 
@@ -55,7 +59,9 @@ public class DatabaseTest {
                 Animal.builder().id("124").name("Max").color("negro").size("grande").race("labrador").description("Juguetón y enérgico").birth_date("15-06-2019").entryDate("20-11-2024").sex("Macho").age(10).sterile(true).disability(true).build(),
                 Animal.builder().id("125").name("Nala").color("blanco").size("pequeño").race("poodle").description("Dócil y amigable").birth_date("08-09-2021").entryDate("25-12-2024").sex("Hembra").age(3).sterile(false).disability(false).build(),
                 Animal.builder().id("126").name("Rocky").color("marrón y blanco").size("mediano").race("beagle").description("Curioso y explorador").birth_date("22-03-2020").entryDate("10-10-2024").sex("Macho").age(4).sterile(true).disability(false).build(),
-                Animal.builder().id("127").name("Luna").color("gris").size("mediano").race("husky").description("Muy inteligente y activa").birth_date("05-12-2018").entryDate("30-09-2024").sex("Hembra").age(6).sterile(true).disability(false).build()
+                Animal.builder().id("127").name("Luna").color("gris").size("mediano").race("husky").description("Muy inteligente y activa").birth_date("05-12-2018").entryDate("30-09-2024").sex("Hembra").age(6).sterile(true).disability(false).build(),
+                Animal.builder().id("128").name("Brenda").color("marrón y blanco").size("mediano").race("bull terrier").description("Muy carinosa").birth_date("02-02-2020").entryDate("17-10-2024").sex("Hembra").age(5).sterile(true).disability(false).imageUrl(this.imageService.loadImageBase64("Brenda", "jpg")).build(),
+                Animal.builder().id("129").name("Dakota").color("beige").size("pequeño").race("mestizo").description("Muy carinosa").birth_date("02-02-2022").entryDate("13-08-2024").sex("Hembra").age(3).sterile(true).disability(false).imageUrl(this.imageService.loadImageBase64("Dakota", "jpeg")).build()
         };
         this.animalRepository.saveAll(List.of(animals));
         LogManager.getLogger(this.getClass()).warn("        ------- animals");

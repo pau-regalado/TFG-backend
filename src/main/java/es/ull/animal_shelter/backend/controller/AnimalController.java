@@ -29,8 +29,8 @@ public class AnimalController {
 	
 	@GetMapping("/animals")
 	public List<Animal> findAll() {
-		animalService.findAll().stream().map(a -> a)
-		.forEach(a -> System.out.print(a.toString()));
+		//animalService.findAll().stream().map(a -> a)
+		//.forEach(a -> System.out.print(a.toString()));
 		return animalService.findAll();
 	}
 	
