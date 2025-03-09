@@ -93,13 +93,13 @@ public class ClientService {
             return Collections.emptyList(); // Si no ha dado "me gusta", no hay recomendaciones
         }
 
-        // 1️⃣ Calcular características promedio
+        //  Calcular características promedio
         Animal averageAnimal = calculateAverageAnimal(likedAnimals);
 
-        // 2️⃣ Obtener todos los animales
+        //  Obtener todos los animales
         List<Animal> allAnimals = animalRepository.findAll();
 
-        // 3️⃣ Calcular similitud y ordenar
+        //  Calcular similitud y ordenar
         return allAnimals.stream()
                 .filter(animal -> !likedAnimals.contains(animal)) // Excluir los que ya le gustan
                 .sorted(Comparator.comparingDouble(a -> calculateSimilarity((Animal) a, averageAnimal)).reversed())
