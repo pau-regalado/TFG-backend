@@ -18,7 +18,7 @@ public class AdoptionController {
 
     @PostMapping
     public Adoption save(@RequestBody AdoptionDetails adoptiondetails) {
-        LogManager.getLogger(this.getClass()).warn(adoptiondetails.toString());
+        //LogManager.getLogger(this.getClass()).warn(adoptiondetails.toString());
         return adoptionService.save(adoptiondetails);
     }
 
