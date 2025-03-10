@@ -94,11 +94,11 @@ public class DatabaseTest {
         LogManager.getLogger(this.getClass()).warn("        ------- clients");
 
         AnimalShelter[] animalShelters = {
-                AnimalShelter.builder().name("Rescue1").location("La Laguna").username("Nico30").password("admin").numberPhone(612345678).animalWL(List.of(animals[0], animals[1],animals[2],animals[3], animals[20])).build(),
-                AnimalShelter.builder().name("Rescue2").location("Santa Cruz").username("rescue2").password("admin").numberPhone(612345678).animalWL(List.of(animals[4], animals[5],animals[6],animals[7])).build(),
-                AnimalShelter.builder().name("Rescue3").location("La Orotava").username("rescue3").password("admin").numberPhone(612345678).animalWL(List.of(animals[8], animals[9],animals[10],animals[11])).build(),
-                AnimalShelter.builder().name("Rescue4").location("El Sauzal").username("rescue4").password("admin").numberPhone(612345678).animalWL(List.of(animals[11], animals[12],animals[13],animals[14])).build(),
-                AnimalShelter.builder().name("Rescue5").location("Los Cristianos").username("rescue5").password("admin").numberPhone(612345678).animalWL(List.of(animals[15], animals[16],animals[17],animals[18], animals[19])).build()
+                AnimalShelter.builder().name("Rescue1").location("La Laguna").username("Nico30").password("admin").numberPhone(612345678).animalWL(List.of(animals[0], animals[1],animals[2],animals[3], animals[20])).imageUrl(this.imageService.loadImageBase64("Rescue1", "png")).build(),
+                AnimalShelter.builder().name("Rescue2").location("Santa Cruz").username("rescue2").password("admin").numberPhone(612345678).animalWL(List.of(animals[4], animals[5],animals[6],animals[7])).imageUrl(this.imageService.loadImageBase64("Rescue1", "png")).build(),
+                AnimalShelter.builder().name("Rescue3").location("La Orotava").username("rescue3").password("admin").numberPhone(612345678).animalWL(List.of(animals[8], animals[9],animals[10],animals[11])).imageUrl(this.imageService.loadImageBase64("Rescue1", "png")).build(),
+                AnimalShelter.builder().name("Rescue4").location("El Sauzal").username("rescue4").password("admin").numberPhone(612345678).animalWL(List.of(animals[11], animals[12],animals[13],animals[14])).imageUrl(this.imageService.loadImageBase64("Rescue1", "png")).build(),
+                AnimalShelter.builder().name("Rescue5").location("Los Cristianos").username("rescue5").password("admin").numberPhone(612345678).animalWL(List.of(animals[15], animals[16],animals[17],animals[18], animals[19])).imageUrl(this.imageService.loadImageBase64("Rescue1", "png")).build()
         };
         this.animalShelterRepository.saveAll(List.of(animalShelters));
         LogManager.getLogger(this.getClass()).warn("        ------- animalShelters");

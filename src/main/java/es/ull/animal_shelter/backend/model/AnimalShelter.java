@@ -23,6 +23,7 @@ public class AnimalShelter extends User {
 	private Integer numberPhone;
 	@DBRef
 	private List<Animal> animalWL;
+	private String imageUrl;
 
 
 	public AnimalShelter fromRegisterAnimalShelterRequest(RegisterAnimalShelterRequest request) {
@@ -33,6 +34,7 @@ public class AnimalShelter extends User {
 				.location(request.getLocation())
 				.numberPhone(request.getNumberPhone())
 				.animalWL(List.of())
+				.imageUrl(request.getImageUrl())
 				.build();
 	}
 }
