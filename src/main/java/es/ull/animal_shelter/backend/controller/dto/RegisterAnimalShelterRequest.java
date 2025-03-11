@@ -11,4 +11,6 @@ public class RegisterAnimalShelterRequest extends RegisterUserRequest {
     private String location;
     private Integer numberPhone;
     private String imageUrl;
+    private Double latitude;
+    private Double longitude;
 }

@@ -21,6 +21,8 @@ public class AnimalShelter extends User {
 	private String name;
 	private String location;
 	private Integer numberPhone;
+	private Double latitude;
+	private Double longitude;
 	@DBRef
 	private List<Animal> animalWL;
 	private String imageUrl;
@@ -35,6 +37,8 @@ public class AnimalShelter extends User {
 				.numberPhone(request.getNumberPhone())
 				.animalWL(List.of())
 				.imageUrl(request.getImageUrl())
+				.longitude(request.getLongitude())
+				.latitude(request.getLatitude())
 				.build();
 	}
 }

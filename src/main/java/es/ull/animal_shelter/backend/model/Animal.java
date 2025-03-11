@@ -30,5 +30,4 @@ public class Animal {
 	private Boolean sterile;
 	private Boolean disability;
 	private String imageUrl;
-
 }
