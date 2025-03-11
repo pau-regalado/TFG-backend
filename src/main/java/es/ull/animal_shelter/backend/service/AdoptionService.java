@@ -25,6 +25,16 @@ public class AdoptionService {
     private ClientService clientService;
 
     public Adoption save(AdoptionDetails adoptionDetails) {
+        // Verificar si ya existe una solicitud pendiente para este cliente y animal
+        boolean alreadyRequested = adoptionRepository.existsByClientIdAndAnimalIdAndStatus(
+                adoptionDetails.getClientId(),
+                adoptionDetails.getAnimalId(),
+                AdoptionStatus.PENDING
+        );
+        if (alreadyRequested) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Ya has enviado una solicitud para este animal y está pendiente de aprobación.");
+        }
         Animal animal = animalService.findById(adoptionDetails.getAnimalId());
         AnimalShelter animalShelter = animalShelterService.findByAnimal(animal);
         Client client = clientService.findById(adoptionDetails.getClientId());
@@ -46,6 +56,10 @@ public class AdoptionService {
         adoption.setDate(LocalDateTime.now()); // Fecha de la solicitud
         Adoption savedAdoption = adoptionRepository.save(adoption);
         animalShelterService.deleteByAnimalId(savedAdoption.getAnimal().getId());
+
+        List<Adoption> pendingAdoptions = adoptionRepository.findByAnimalAndStatus(savedAdoption.getAnimal(), AdoptionStatus.PENDING);
+        pendingAdoptions.forEach((a -> a.setStatus(AdoptionStatus.REJECTED)));
+        adoptionRepository.saveAll(pendingAdoptions);
         return savedAdoption;
     }
 
