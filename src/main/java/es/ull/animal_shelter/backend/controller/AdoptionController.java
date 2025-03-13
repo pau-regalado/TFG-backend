@@ -37,6 +37,11 @@ public class AdoptionController {
         return adoptionService.findByAnimalShelterId(id);
     }
 
+    @GetMapping("/client/{id}")
+    public List<Adoption> findByClientId(@PathVariable String id) {
+        return adoptionService.findByClientId(id);
+    }
+
     @GetMapping("/{id}/confirm")
     public Adoption confirmAdoption(@PathVariable String id) {
         return adoptionService.confirmAdoptionRequest(id);

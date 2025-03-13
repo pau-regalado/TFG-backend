@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface AdoptionRepository extends MongoRepository<Adoption, String> {
     Optional<Adoption> findAdoptionByAnimalIdAndClientId(String animalId, String clientId);
     List<Adoption> findByAnimalShelterId(String id);
+    List<Adoption> findByClientId(String id);
     List<Adoption> findByAnimalAndStatus(Animal animal, AdoptionStatus status);
     boolean existsByClientIdAndAnimalIdAndStatus(String clientId, String animalId, AdoptionStatus status);
 }

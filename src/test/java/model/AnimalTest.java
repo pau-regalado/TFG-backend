@@ -1,7 +1,6 @@
-/*package model;
+package model;
 
 import es.ull.animal_shelter.backend.model.Animal;
-import org.bson.types.Binary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +24,7 @@ class AnimalTest {
                 .age(5)
                 .sterile(true)
                 .disability(false)
-                .image(new Binary(new byte[]{1, 2, 3}))
+                .imageUrl("http://example.com/lola.jpg")
                 .build();
 
         animal2 = Animal.builder()
@@ -41,7 +40,7 @@ class AnimalTest {
                 .age(10)
                 .sterile(true)
                 .disability(true)
-                .image(new Binary(new byte[]{4, 5, 6}))
+                .imageUrl("http://example.com/max.jpg")
                 .build();
     }
 
@@ -59,7 +58,7 @@ class AnimalTest {
         assertEquals(5, animal1.getAge());
         assertTrue(animal1.getSterile());
         assertFalse(animal1.getDisability());
-        assertNotNull(animal1.getImage());
+        assertEquals("http://example.com/lola.jpg", animal1.getImageUrl());
 
         assertEquals("124", animal2.getId());
         assertEquals("Max", animal2.getName());
@@ -73,7 +72,7 @@ class AnimalTest {
         assertEquals(10, animal2.getAge());
         assertTrue(animal2.getSterile());
         assertTrue(animal2.getDisability());
-        assertNotNull(animal2.getImage());
+        assertEquals("http://example.com/max.jpg", animal2.getImageUrl());
     }
 
     @Test
@@ -89,7 +88,7 @@ class AnimalTest {
         animal1.setAge(3);
         animal1.setSterile(false);
         animal1.setDisability(true);
-        animal1.setImage(new Binary(new byte[]{7, 8, 9}));
+        animal1.setImageUrl("http://example.com/nina.jpg");
 
         assertEquals("Nina", animal1.getName());
         assertEquals("blanco", animal1.getColor());
@@ -102,7 +101,7 @@ class AnimalTest {
         assertEquals(3, animal1.getAge());
         assertFalse(animal1.getSterile());
         assertTrue(animal1.getDisability());
-        assertNotNull(animal1.getImage());
+        assertEquals("http://example.com/nina.jpg", animal1.getImageUrl());
     }
 
     @Test
@@ -120,7 +119,7 @@ class AnimalTest {
                 .age(5)
                 .sterile(true)
                 .disability(false)
-                .image(new Binary(new byte[]{1, 2, 3}))
+                .imageUrl("http://example.com/lola.jpg")
                 .build();
 
         assertEquals(animal1, sameAsAnimal1);
@@ -132,11 +131,9 @@ class AnimalTest {
 
     @Test
     void testToString() {
-        String expected = "Animal(id=123, name=Lola, color=marrón, size=mediano, race=mestizo, description=Muy cariñosa, birth_date=02-02-2020, entryDate=17-10-2024, sex=Hembra, age=5, sterile=true, disability=false, image=[binary data])";
-        assertTrue(animal1.toString().contains("id=123"));
-        assertTrue(animal1.toString().contains("name=Lola"));
-        assertTrue(animal1.toString().contains("color=marrón"));
-        assertTrue(animal1.toString().contains("sterile=true"));
+        String animal1ToString = animal1.toString();
+
+        assertTrue(animal1.toString().contains("imageUrl=http://example.com/lola.jpg"));
+        assertTrue(animal2.toString().contains("imageUrl=http://example.com/max.jpg"));
     }
 }
-*/

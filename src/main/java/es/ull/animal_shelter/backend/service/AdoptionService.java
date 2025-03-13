@@ -82,4 +82,8 @@ public class AdoptionService {
     public List<Adoption> findByAnimalShelterId(String id) {
         return adoptionRepository.findByAnimalShelterId(id);
     }
+
+    public List<Adoption> findByClientId(String id) {
+        return adoptionRepository.findByClientId(id);
+    }
 }

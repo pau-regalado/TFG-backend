@@ -40,6 +40,7 @@ class AnimalServiceTest {
         animal.setAge(10);
         animal.setSterile(true);
         animal.setDisability(true);
+        animal.setImageUrl("http://example.com/image.jpg");
 
         when(animalRepository.findById("124")).thenReturn(Optional.of(animal));
         when(animalRepository.findAll()).thenReturn(List.of(animal));
@@ -53,6 +54,7 @@ class AnimalServiceTest {
         assertNotNull(animals);
         assertFalse(animals.isEmpty());
         assertEquals(1, animals.size());
+        assertEquals("http://example.com/image.jpg", animals.get(0).getImageUrl());
     }
 
     @Test
@@ -60,6 +62,7 @@ class AnimalServiceTest {
         Animal result = animalService.findById("124");
         assertNotNull(result);
         assertEquals("124", result.getId());
+        assertEquals("http://example.com/image.jpg", result.getImageUrl());
     }
 
     @Test
@@ -73,9 +76,13 @@ class AnimalServiceTest {
         Animal updatedAnimal = new Animal();
         updatedAnimal.setId("124");
         updatedAnimal.setName("John");
+        updatedAnimal.setImageUrl("http://example.com/updated_image.jpg");
+
+        when(animalRepository.save(updatedAnimal)).thenReturn(updatedAnimal);
 
         Animal result = animalService.save(updatedAnimal);
         assertNotNull(result);
         assertEquals("John", result.getName());
+        assertEquals("http://example.com/updated_image.jpg", result.getImageUrl());
     }
 }

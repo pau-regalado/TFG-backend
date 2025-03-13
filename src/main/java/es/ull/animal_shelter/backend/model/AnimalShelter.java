@@ -28,7 +28,7 @@ public class AnimalShelter extends User {
 	private String imageUrl;
 
 
-	public AnimalShelter fromRegisterAnimalShelterRequest(RegisterAnimalShelterRequest request) {
+	public static AnimalShelter fromRegisterAnimalShelterRequest(RegisterAnimalShelterRequest request) {
 		return AnimalShelter.builder().name(request.getName())
 				.username(request.getUsername())
 				.password(request.getPassword())
