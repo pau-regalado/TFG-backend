@@ -27,8 +27,13 @@ class AnimalShelterServiceTest {
     @Autowired
     private AnimalService animalService;
 
-    @Autowired
-    private AnimalShelterRepository animalShelterRepository;
+    @Test
+    void testFindAllAnimalShelters() {
+        List<AnimalShelter> animalShelters = animalShelterService.findAll();
+        assertNotNull(animalShelters);
+        assertFalse(animalShelters.isEmpty());
+        assertEquals("Rescue1", animalShelters.get(0).getName());
+    }
 
     @Test
     void testSaveAnimalShelter() {
