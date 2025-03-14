@@ -21,8 +21,8 @@ public class AnimalShelterService {
     @Autowired
     private AnimalService animalService;
     
-    public void save(AnimalShelter shelter) {
-        animalShelterRepository.save(shelter);
+    public AnimalShelter save(AnimalShelter shelter) {
+        return animalShelterRepository.save(shelter);
     }
 
     public AnimalShelter findByName(String name) {

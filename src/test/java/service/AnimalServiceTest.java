@@ -45,7 +45,7 @@ class AnimalServiceTest {
         List<Animal> animals = animalService.findAll();
         assertNotNull(animals);
         assertFalse(animals.isEmpty());
-        assertEquals(21, animals.size());
+        assertEquals(22, animals.size());
     }
 
     @Test
