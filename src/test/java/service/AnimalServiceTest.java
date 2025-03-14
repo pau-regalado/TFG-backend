@@ -1,51 +1,47 @@
 package service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import es.ull.animal_shelter.backend.BackendApplication;
+import es.ull.animal_shelter.backend.model.Animal;
+import es.ull.animal_shelter.backend.model.Client;
+import es.ull.animal_shelter.backend.service.AnimalService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import es.ull.animal_shelter.backend.model.Animal;
-import es.ull.animal_shelter.backend.repository.AnimalRepository;
-import es.ull.animal_shelter.backend.service.AnimalService;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
+@SpringBootTest(classes = BackendApplication.class)
 class AnimalServiceTest {
 
-    @Mock
-    private AnimalRepository animalRepository;
-
-    @InjectMocks
+    @Autowired
     private AnimalService animalService;
 
-    private Animal animal;
+    @Test
+    void testSaveAnimal() {
+        Animal animal = Animal.builder()
+                .id("128")
+                .name("Brenda")
+                .color("marrón y blanco")
+                .size("mediano")
+                .race("bull terrier")
+                .description("Muy carinosa")
+                .birth_date("02-02-2020")
+                .entryDate("17-10-2024")
+                .sex("Hembra")
+                .age(5)
+                .sterile(true)
+                .disability(false)
+                .imageUrl("Brenda,jpg")
+                .build();
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-
-        animal = new Animal();
-        animal.setId("124");
-        animal.setName("John");
-        animal.setColor("negro");
-        animal.setDescription(null);
-        animal.setBirth_date("20-03-2020");
-        animal.setEntryDate("07-07-2024");
-        animal.setSex("Macho");
-        animal.setAge(10);
-        animal.setSterile(true);
-        animal.setDisability(true);
-        animal.setImageUrl("http://example.com/image.jpg");
-
-        when(animalRepository.findById("124")).thenReturn(Optional.of(animal));
-        when(animalRepository.findAll()).thenReturn(List.of(animal));
-        when(animalRepository.save(any(Animal.class))).thenReturn(animal);
-        doNothing().when(animalRepository).deleteById("124");
+        Animal savedAnimal = animalService.save(animal);
+        assertNotNull(savedAnimal);
+        assertEquals("mediano", savedAnimal.getSize());
     }
 
     @Test
@@ -53,36 +49,41 @@ class AnimalServiceTest {
         List<Animal> animals = animalService.findAll();
         assertNotNull(animals);
         assertFalse(animals.isEmpty());
-        assertEquals(1, animals.size());
-        assertEquals("http://example.com/image.jpg", animals.get(0).getImageUrl());
+        assertEquals(21, animals.size());
     }
 
     @Test
     void testFindById() {
-        Animal result = animalService.findById("124");
-        assertNotNull(result);
-        assertEquals("124", result.getId());
-        assertEquals("http://example.com/image.jpg", result.getImageUrl());
+        Animal animal = animalService.findById("139");
+        assertNotNull(animal);
+        assertEquals("139", animal.getId());
+        assertEquals("Kai", animal.getName());
+
+        assertThrows(ResponseStatusException.class, () -> {
+            animalService.findById("0"); // This should throw 404
+        });
     }
 
     @Test
     void testDeleteById() {
-        assertDoesNotThrow(() -> animalService.deleteById("124"));
-        verify(animalRepository, times(1)).deleteById("124");
+        // First, make sure the animal exists
+        Animal animal = animalService.findById("139");
+        assertNotNull(animal);
+        assertEquals("139", animal.getId());
+        assertEquals("Kai", animal.getName());
+
+        // Delete the animal
+        animalService.deleteById("139");
+
+        // Now, trying to find it should throw a 404 NOT FOUND exception
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+            animalService.findById("139");
+        });
+
+        // Assert the reason (error message)
+        assertEquals("Animal no encontrado con ID: 139", exception.getReason());
     }
 
-    @Test
-    void testUpdateAnimal() {
-        Animal updatedAnimal = new Animal();
-        updatedAnimal.setId("124");
-        updatedAnimal.setName("John");
-        updatedAnimal.setImageUrl("http://example.com/updated_image.jpg");
 
-        when(animalRepository.save(updatedAnimal)).thenReturn(updatedAnimal);
 
-        Animal result = animalService.save(updatedAnimal);
-        assertNotNull(result);
-        assertEquals("John", result.getName());
-        assertEquals("http://example.com/updated_image.jpg", result.getImageUrl());
-    }
 }

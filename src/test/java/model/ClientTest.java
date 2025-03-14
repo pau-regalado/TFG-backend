@@ -128,7 +128,13 @@ class ClientTest {
 
     @Test
     void testFromRegisterClientRequest() {
-        RegisterClientRequest request = new RegisterClientRequest();
+        RegisterClientRequest request = RegisterClientRequest.builder()
+                .username("Carlos123")
+                .password("securePass")
+                .email("carlos123@gmail.com")
+                .name("Carlos")
+                .lastName("Mendez")
+                .build();
         request.setName("Luis");
         request.setLastName("Martínez");
         request.setUsername("LuisM");
