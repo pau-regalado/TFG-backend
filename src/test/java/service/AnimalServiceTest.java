@@ -2,16 +2,12 @@ package service;
 
 import es.ull.animal_shelter.backend.BackendApplication;
 import es.ull.animal_shelter.backend.model.Animal;
-import es.ull.animal_shelter.backend.model.Client;
 import es.ull.animal_shelter.backend.service.AnimalService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 

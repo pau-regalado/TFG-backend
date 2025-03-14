@@ -1,13 +1,17 @@
 package service;
 
 import es.ull.animal_shelter.backend.BackendApplication;
+import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
+import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
+import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.Client;
+import es.ull.animal_shelter.backend.repository.AnimalRepository;
+import es.ull.animal_shelter.backend.service.AnimalService;
 import es.ull.animal_shelter.backend.service.ClientService;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +23,9 @@ class ClientServiceTest {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private AnimalRepository animalRepository;
 
     @Test
     void testSaveClient() {
@@ -100,7 +107,7 @@ class ClientServiceTest {
         assertTrue(clients.size() >= 2);
     }
 
-    /*@Test
+    @Test
     void testLogin() {
         Client client = Client.builder()
                 .id("c6")
@@ -119,16 +126,17 @@ class ClientServiceTest {
         assertEquals("loginuser", loggedClient.getUsername());
     }
 
-    @Test
+    /*@Test
     void testRegister() {
         // Se asume que RegisterClientRequest tiene constructor (username, password, email, name)
-        RegisterClientRequest registerRequest = new RegisterClientRequest("lasName");
+        RegisterClientRequest registerRequest = new RegisterClientRequest("lastName");
         Client registeredClient = clientService.register(registerRequest);
         assertNotNull(registeredClient);
-        assertEquals("lasName", registeredClient.getUsername());
+        assertEquals("name", registeredClient.getName());
+        assertEquals("lastName", registeredClient.getUsername());
         assertEquals("newuser@example.com", registeredClient.getEmail());
         assertEquals("New User", registeredClient.getName());
-    }
+    }*/
 
     @Test
     void testAddAnimalToWishListAndViewAnimals() {
@@ -284,5 +292,5 @@ class ClientServiceTest {
         });
         assertTrue(exception2.getMessage().contains("Client not found with username: nonexistent"));
     }
-    */
+
 }
