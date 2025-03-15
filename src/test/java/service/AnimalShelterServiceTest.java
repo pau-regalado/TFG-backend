@@ -163,7 +163,7 @@ class AnimalShelterServiceTest {
 
         AnimalShelter updatedShelter = animalShelterService.deleteAnimal("s6", "a2");
         assertNotNull(updatedShelter);
-        assertTrue(updatedShelter.getAnimalWL().isEmpty());
+        assertFalse(updatedShelter.getAnimalWL().contains(animal));
     }*/
 
     @Test

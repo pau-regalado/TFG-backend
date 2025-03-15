@@ -79,7 +79,4 @@ class AnimalServiceTest {
         // Assert the reason (error message)
         assertEquals("Animal no encontrado con ID: 139", exception.getReason());
     }
-
-
-
 }
