@@ -56,9 +56,6 @@ public class ChatService {
 
     public List<Chat> findByClientId(String clientId) {
         Client client = clientService.findById(clientId);
-        LogManager.getLogger(this.getClass()).warn(
-                chatRepository.findChatByClient(client)
-        );
         return chatRepository.findChatByClient(client);
     }
 

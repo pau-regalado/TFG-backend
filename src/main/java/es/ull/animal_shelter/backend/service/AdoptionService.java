@@ -46,7 +46,6 @@ public class AdoptionService {
                 .date(LocalDateTime.now())
                 .status(AdoptionStatus.PENDING)
                 .build();
-        LogManager.getLogger(this.getClass()).warn(adoption.toString());
         return adoptionRepository.save(adoption);
     }
 
