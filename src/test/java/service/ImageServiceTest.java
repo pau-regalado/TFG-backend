@@ -24,12 +24,12 @@ public class ImageServiceTest {
      */
     @Test
     void testLoadExistingImage() {
-        String filePath = "src/main/resources/developDataImages/testImage.jpg";
+        String filePath = "src/main/resources/developDataImages/Max.jpg";
         if (!Files.exists(Paths.get(filePath))) {
             System.out.println("El archivo " + filePath + " no existe, se omite testLoadExistingImage");
             return;
         }
-        String imageData = imageService.loadImageBase64("testImage", "jpg");
+        String imageData = imageService.loadImageBase64("Max", "jpg");
         assertNotNull(imageData, "La imagen debe cargarse correctamente");
         assertTrue(imageData.startsWith("data:image/jpg;base64,"), "El string devuelto debe tener el prefijo adecuado");
     }
