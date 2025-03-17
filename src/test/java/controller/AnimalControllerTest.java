@@ -14,7 +14,6 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = BackendApplication.class)
-@ActiveProfiles("dev")
 public class AnimalControllerTest {
 
     @Autowired
