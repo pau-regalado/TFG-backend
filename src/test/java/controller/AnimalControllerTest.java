@@ -55,7 +55,7 @@ public class AnimalControllerTest {
                 .age(3)
                 .sterile(false)
                 .disability(false)
-                .imageUrl("http://example.com/test.jpg")
+                .imageUrl("Max.jpg")
                 .build();
         ResponseEntity<Animal> response = restTemplate.postForEntity("/api/v1/animals", newAnimal, Animal.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -80,7 +80,7 @@ public class AnimalControllerTest {
                 .age(2)
                 .sterile(true)
                 .disability(false)
-                .imageUrl("http://example.com/delete.jpg")
+                .imageUrl("Max.jpg")
                 .build();
         Animal savedAnimal = animalController.save(newAnimal);
 
