@@ -1,6 +1,7 @@
-package es.ull.animal_shelter.backend.controller.dto;
+package dto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
