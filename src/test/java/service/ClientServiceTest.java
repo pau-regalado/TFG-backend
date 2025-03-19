@@ -6,7 +6,6 @@ import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.Client;
 import es.ull.animal_shelter.backend.repository.AnimalRepository;
-import es.ull.animal_shelter.backend.service.AnimalService;
 import es.ull.animal_shelter.backend.service.ClientService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -224,6 +223,9 @@ class ClientServiceTest {
 
     @Test
     void testGetRecommendations() {
+        // Para evitar problemas con animales presembrados con campos nulos, se borran todos los animales
+        animalRepository.deleteAll();
+
         // Crear y guardar un cliente sin animales en su lista de deseos inicialmente
         Client client = Client.builder()
                 .id("c9")
@@ -271,10 +273,9 @@ class ClientServiceTest {
         // Agregar animal1 a la lista de deseos (se excluye de recomendaciones)
         clientService.addAnimalToWishList("c9", "a3");
 
-        // Obtener recomendaciones: se espera que devuelva animal2 (u otros que se asemejen a las características promedio)
+        // Obtener recomendaciones: se espera que devuelva animal2
         List<Animal> recommendations = clientService.getRecommendations("c9");
         assertNotNull(recommendations);
-        // En este caso, al tener solo animal2 fuera de la lista de deseos, se espera que figure en las recomendaciones
         assertTrue(recommendations.contains(animal2));
     }
 
@@ -292,5 +293,4 @@ class ClientServiceTest {
         });
         assertTrue(exception2.getMessage().contains("Client not found with username: nonexistent"));
     }
-
 }
