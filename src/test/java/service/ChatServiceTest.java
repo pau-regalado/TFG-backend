@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,18 +101,24 @@ class ChatServiceTest {
 
     /**
      * Se prueba la consulta de chats por id de cliente.
-     * En lugar de usar directamente el id "130", se busca el animal "Dodo" por nombre en la lista de animales sembrados.
+     * En este test se crea manualmente un animal "Dodo" junto con un refugio asociado.
      */
     @Test
     void testFindByClientId() {
-        Optional<Animal> optAnimal = animalService.findAll().stream()
-                .filter(a -> "Dodo".equals(a.getName()))
-                .findFirst();
-        assertTrue(optAnimal.isPresent(), "No se encontró el animal 'Dodo' en la base de datos");
-        Animal animal = optAnimal.get();
+        // Creamos un animal "Dodo"
+        Animal animal = Animal.builder().name("Dodo").build();
+        Animal savedAnimal = animalService.save(animal);
 
-        AnimalShelter shelter = animalShelterService.findByAnimal(animal);
-        assertNotNull(shelter, "No se encontró el refugio para el animal 'Dodo'");
+        // Creamos un refugio y asociamos el animal "Dodo" a él
+        AnimalShelter shelter = AnimalShelter.builder()
+                .name("TestShelter")
+                .username("testshelter")
+                .password("pass")
+                .animalWL(new ArrayList<>())
+                .build();
+        AnimalShelter savedShelter = animalShelterService.save(shelter);
+        savedShelter.getAnimalWL().add(savedAnimal);
+        savedShelter = animalShelterService.save(savedShelter);
 
         Client client = Client.builder()
                 .id("c_chat3")
@@ -119,7 +126,7 @@ class ChatServiceTest {
                 .build();
         clientService.save(client);
 
-        ChatCreation chatCreation = new ChatCreation(animal.getId(), client.getId());
+        ChatCreation chatCreation = new ChatCreation(savedAnimal.getId(), client.getId());
         chatService.save(chatCreation);
 
         List<Chat> chats = chatService.findByClientId(client.getId());
@@ -218,18 +225,24 @@ class ChatServiceTest {
 
     /**
      * Se prueba el envío de un mensaje en un chat.
-     * En lugar de usar directamente el animal con id "130", se busca el animal "Dodo" por nombre.
+     * En este test se crea manualmente un animal "Dodo" con su refugio asociado.
      */
     @Test
     void testSendMessage() {
-        Optional<Animal> optAnimal = animalService.findAll().stream()
-                .filter(a -> "Dodo".equals(a.getName()))
-                .findFirst();
-        assertTrue(optAnimal.isPresent(), "No se encontró el animal 'Dodo'");
-        Animal animal = optAnimal.get();
+        // Creamos un animal "Dodo"
+        Animal animal = Animal.builder().name("Dodo").build();
+        Animal savedAnimal = animalService.save(animal);
 
-        AnimalShelter shelter = animalShelterService.findByAnimal(animal);
-        assertNotNull(shelter, "No se encontró el refugio para el animal 'Dodo'");
+        // Creamos un refugio y asociamos el animal "Dodo"
+        AnimalShelter shelter = AnimalShelter.builder()
+                .name("TestShelter")
+                .username("testshelter")
+                .password("pass")
+                .animalWL(new ArrayList<>())
+                .build();
+        AnimalShelter savedShelter = animalShelterService.save(shelter);
+        savedShelter.getAnimalWL().add(savedAnimal);
+        savedShelter = animalShelterService.save(savedShelter);
 
         Client client = Client.builder()
                 .id("c_chat7")
@@ -237,7 +250,7 @@ class ChatServiceTest {
                 .build();
         clientService.save(client);
 
-        ChatCreation chatCreation = new ChatCreation(animal.getId(), client.getId());
+        ChatCreation chatCreation = new ChatCreation(savedAnimal.getId(), client.getId());
         Chat chat = chatService.save(chatCreation);
 
         Message message = Message.builder()
