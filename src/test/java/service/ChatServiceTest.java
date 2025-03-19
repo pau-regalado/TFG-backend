@@ -19,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -99,13 +100,18 @@ class ChatServiceTest {
 
     /**
      * Se prueba la consulta de chats por id de cliente.
-     * Se utiliza el animal con id "130" (Dodo, presembrado) y se crea un cliente nuevo.
+     * En lugar de usar directamente el id "130", se busca el animal "Dodo" por nombre en la lista de animales sembrados.
      */
     @Test
     void testFindByClientId() {
-        Animal animal = animalService.findById("130");
+        Optional<Animal> optAnimal = animalService.findAll().stream()
+                .filter(a -> "Dodo".equals(a.getName()))
+                .findFirst();
+        assertTrue(optAnimal.isPresent(), "No se encontró el animal 'Dodo' en la base de datos");
+        Animal animal = optAnimal.get();
+
         AnimalShelter shelter = animalShelterService.findByAnimal(animal);
-        assertNotNull(shelter, "No se encontró el refugio para el animal con id 130");
+        assertNotNull(shelter, "No se encontró el refugio para el animal 'Dodo'");
 
         Client client = Client.builder()
                 .id("c_chat3")
@@ -212,13 +218,18 @@ class ChatServiceTest {
 
     /**
      * Se prueba el envío de un mensaje en un chat.
-     * Se utiliza el animal con id "130" (Dodo) y se crea un cliente nuevo.
+     * En lugar de usar directamente el animal con id "130", se busca el animal "Dodo" por nombre.
      */
     @Test
     void testSendMessage() {
-        Animal animal = animalService.findById("130");
+        Optional<Animal> optAnimal = animalService.findAll().stream()
+                .filter(a -> "Dodo".equals(a.getName()))
+                .findFirst();
+        assertTrue(optAnimal.isPresent(), "No se encontró el animal 'Dodo'");
+        Animal animal = optAnimal.get();
+
         AnimalShelter shelter = animalShelterService.findByAnimal(animal);
-        assertNotNull(shelter, "No se encontró el refugio para el animal con id 130");
+        assertNotNull(shelter, "No se encontró el refugio para el animal 'Dodo'");
 
         Client client = Client.builder()
                 .id("c_chat7")
