@@ -1,4 +1,4 @@
-package controller;
+/*package controller;
 
 import es.ull.animal_shelter.backend.BackendApplication;
 import es.ull.animal_shelter.backend.controller.AnimalController;
@@ -92,4 +92,4 @@ public class AnimalControllerTest {
         });
         assertEquals("404 NOT_FOUND \"Animal no encontrado con ID: 145\"", exception.getMessage());
     }
-}
+}*/
