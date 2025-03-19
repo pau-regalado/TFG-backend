@@ -20,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,48 +42,89 @@ class ChatServiceTest {
     @Autowired
     private MessageService messageService;
 
-    /**
-     * Utiliza un animal presembrado (por ejemplo, Brenda, id "128") que ya forma parte de un refugio (Rescue1)
-     * y crea un cliente nuevo con id "c_chat1" para formar el chat.
-     */
     @Test
     void testSaveChat() {
-        // Se recupera el animal ya sembrado (Brenda, id "128")
-        Animal animal = animalService.findById("128");
-        // Se obtiene el refugio asociado (según lo sembrado en DatabaseTest, Rescue1 contiene a "128")
-        AnimalShelter shelter = animalShelterService.findByAnimal(animal);
-        assertNotNull(shelter, "No se encontró el refugio para el animal con id 128");
+        // Crear un animal nuevo para el chat
+        Animal animal = Animal.builder()
+                .id("chat_animal_1")
+                .name("Leo")
+                .color("gris")
+                .size("mediano")
+                .race("perro")
+                .description("Perro amigable")
+                .birth_date("01-01-2020")
+                .entryDate("01-02-2021")
+                .sex("Macho")
+                .age(3)
+                .sterile(true)
+                .disability(false)
+                .imageUrl("http://example.com/leo.jpg")
+                .build();
+        animalService.save(animal);
 
-        // Se crea un cliente nuevo con id fijo
+        // Crear un refugio y asociarle el animal
+        AnimalShelter shelter = AnimalShelter.builder()
+                .id("shelter_chat_1")
+                .name("Shelter Chat 1")
+                .username("shelterchat1")
+                .password("admin")
+                .animalWL(new ArrayList<>())
+                .build();
+        animalShelterService.save(shelter);
+        shelter.getAnimalWL().add(animal);
+        animalShelterService.save(shelter);
+
+        // Crear un cliente
         Client client = Client.builder()
                 .id("c_chat1")
                 .name("Alice")
                 .build();
         clientService.save(client);
 
-        // Se forma el DTO para crear el chat usando los datos existentes
+        // Crear el chat
         ChatCreation chatCreation = new ChatCreation(animal.getId(), client.getId());
         Chat chat = chatService.save(chatCreation);
 
         assertNotNull(chat);
         assertEquals(animal.getId(), chat.getAnimal().getId());
         assertEquals(client.getId(), chat.getClient().getId());
-        // El refugio se determina a partir del animal
         assertEquals(shelter.getId(), chat.getAnimalShelter().getId());
         assertTrue(chat.getMessages().isEmpty());
     }
 
-    /**
-     * Se prueba que, al crear un chat con la misma combinación de animal y cliente,
-     * se retorne el chat ya existente.
-     * En este test se utiliza el animal con id "142" (Chispa, según la semilla) y se crea un cliente nuevo.
-     */
     @Test
     void testSaveChat_ExistingChat() {
-        Animal animal = animalService.findById("142");
-        AnimalShelter shelter = animalShelterService.findByAnimal(animal);
-        assertNotNull(shelter, "No se encontró el refugio para el animal con id 142");
+        // Crear un animal nuevo
+        Animal animal = Animal.builder()
+                .id("chat_animal_2")
+                .name("Mia")
+                .color("negro")
+                .size("pequeño")
+                .race("gato")
+                .description("Gato juguetón")
+                .birth_date("05-05-2020")
+                .entryDate("10-05-2021")
+                .sex("Hembra")
+                .age(2)
+                .sterile(true)
+                .disability(false)
+                .imageUrl("http://example.com/mia.jpg")
+                .build();
+        animalService.save(animal);
 
+        // Crear un refugio para el animal
+        AnimalShelter shelter = AnimalShelter.builder()
+                .id("shelter_chat_2")
+                .name("Shelter Chat 2")
+                .username("shelterchat2")
+                .password("admin")
+                .animalWL(new ArrayList<>())
+                .build();
+        animalShelterService.save(shelter);
+        shelter.getAnimalWL().add(animal);
+        animalShelterService.save(shelter);
+
+        // Crear un cliente
         Client client = Client.builder()
                 .id("c_chat2")
                 .name("Bob")
@@ -99,34 +139,46 @@ class ChatServiceTest {
         assertEquals(chat1.getId(), chat2.getId());
     }
 
-    /**
-     * Se prueba la consulta de chats por id de cliente.
-     * En este test se crea manualmente un animal "Dodo" junto con un refugio asociado.
-     */
     @Test
     void testFindByClientId() {
-        // Creamos un animal "Dodo"
-        Animal animal = Animal.builder().name("Dodo").build();
-        Animal savedAnimal = animalService.save(animal);
+        // Crear un animal nuevo
+        Animal animal = Animal.builder()
+                .id("chat_animal_3")
+                .name("Dodo")
+                .color("marrón")
+                .size("grande")
+                .race("perro")
+                .description("Animal amistoso")
+                .birth_date("10-10-2020")
+                .entryDate("15-10-2021")
+                .sex("Macho")
+                .age(4)
+                .sterile(true)
+                .disability(false)
+                .imageUrl("http://example.com/dodo.jpg")
+                .build();
+        animalService.save(animal);
 
-        // Creamos un refugio y asociamos el animal "Dodo" a él
+        // Crear un refugio y asociar el animal
         AnimalShelter shelter = AnimalShelter.builder()
-                .name("TestShelter")
-                .username("testshelter")
-                .password("pass")
+                .id("shelter_chat_3")
+                .name("Shelter Chat 3")
+                .username("shelterchat3")
+                .password("admin")
                 .animalWL(new ArrayList<>())
                 .build();
-        AnimalShelter savedShelter = animalShelterService.save(shelter);
-        savedShelter.getAnimalWL().add(savedAnimal);
-        savedShelter = animalShelterService.save(savedShelter);
+        animalShelterService.save(shelter);
+        shelter.getAnimalWL().add(animal);
+        animalShelterService.save(shelter);
 
+        // Crear un cliente
         Client client = Client.builder()
                 .id("c_chat3")
                 .name("Carol")
                 .build();
         clientService.save(client);
 
-        ChatCreation chatCreation = new ChatCreation(savedAnimal.getId(), client.getId());
+        ChatCreation chatCreation = new ChatCreation(animal.getId(), client.getId());
         chatService.save(chatCreation);
 
         List<Chat> chats = chatService.findByClientId(client.getId());
@@ -135,16 +187,39 @@ class ChatServiceTest {
         chats.forEach(chat -> assertEquals(client.getId(), chat.getClient().getId()));
     }
 
-    /**
-     * Se prueba la consulta de chats por id de refugio.
-     * Se utiliza el animal con id "131" (Freddy, presembrado) y se crea un cliente nuevo.
-     */
     @Test
     void testFindByAnimalShelter() {
-        Animal animal = animalService.findById("131");
-        AnimalShelter shelter = animalShelterService.findByAnimal(animal);
-        assertNotNull(shelter, "No se encontró el refugio para el animal con id 131");
+        // Crear un animal nuevo
+        Animal animal = Animal.builder()
+                .id("chat_animal_4")
+                .name("Simba")
+                .color("dorado")
+                .size("mediano")
+                .race("león")
+                .description("Animal majestuoso")
+                .birth_date("12-12-2019")
+                .entryDate("01-01-2020")
+                .sex("Macho")
+                .age(5)
+                .sterile(true)
+                .disability(false)
+                .imageUrl("http://example.com/simba.jpg")
+                .build();
+        animalService.save(animal);
 
+        // Crear un refugio y asociar el animal
+        AnimalShelter shelter = AnimalShelter.builder()
+                .id("shelter_chat_4")
+                .name("Shelter Chat 4")
+                .username("shelterchat4")
+                .password("admin")
+                .animalWL(new ArrayList<>())
+                .build();
+        animalShelterService.save(shelter);
+        shelter.getAnimalWL().add(animal);
+        animalShelterService.save(shelter);
+
+        // Crear un cliente
         Client client = Client.builder()
                 .id("c_chat4")
                 .name("David")
@@ -160,16 +235,39 @@ class ChatServiceTest {
         chats.forEach(chat -> assertEquals(shelter.getId(), chat.getAnimalShelter().getId()));
     }
 
-    /**
-     * Se prueba la consulta de chats por cliente y refugio.
-     * Se utiliza el animal con id "128" (Brenda) para obtener su refugio y se crea un cliente nuevo.
-     */
     @Test
     void testFindByClientAndAnimalShelter() {
-        Animal animal = animalService.findById("128");
-        AnimalShelter shelter = animalShelterService.findByAnimal(animal);
-        assertNotNull(shelter, "No se encontró el refugio para el animal con id 128");
+        // Crear un animal nuevo
+        Animal animal = Animal.builder()
+                .id("chat_animal_5")
+                .name("Luna")
+                .color("blanco")
+                .size("pequeño")
+                .race("gato")
+                .description("Gata dulce")
+                .birth_date("20-06-2020")
+                .entryDate("25-06-2021")
+                .sex("Hembra")
+                .age(3)
+                .sterile(true)
+                .disability(false)
+                .imageUrl("http://example.com/luna.jpg")
+                .build();
+        animalService.save(animal);
 
+        // Crear un refugio y asociar el animal
+        AnimalShelter shelter = AnimalShelter.builder()
+                .id("shelter_chat_5")
+                .name("Shelter Chat 5")
+                .username("shelterchat5")
+                .password("admin")
+                .animalWL(new ArrayList<>())
+                .build();
+        animalShelterService.save(shelter);
+        shelter.getAnimalWL().add(animal);
+        animalShelterService.save(shelter);
+
+        // Crear un cliente
         Client client = Client.builder()
                 .id("c_chat5")
                 .name("Eva")
@@ -188,16 +286,39 @@ class ChatServiceTest {
         });
     }
 
-    /**
-     * Se prueba la consulta de un chat por su id.
-     * Se utiliza el animal con id "129" (Dakota) y se crea un cliente nuevo.
-     */
     @Test
     void testFindById() {
-        Animal animal = animalService.findById("129");
-        AnimalShelter shelter = animalShelterService.findByAnimal(animal);
-        assertNotNull(shelter, "No se encontró el refugio para el animal con id 129");
+        // Crear un animal nuevo
+        Animal animal = Animal.builder()
+                .id("chat_animal_6")
+                .name("Oscar")
+                .color("verde")
+                .size("mediano")
+                .race("iguana")
+                .description("Animal exótico")
+                .birth_date("15-03-2020")
+                .entryDate("20-03-2021")
+                .sex("Macho")
+                .age(4)
+                .sterile(true)
+                .disability(false)
+                .imageUrl("http://example.com/oscar.jpg")
+                .build();
+        animalService.save(animal);
 
+        // Crear un refugio y asociar el animal
+        AnimalShelter shelter = AnimalShelter.builder()
+                .id("shelter_chat_6")
+                .name("Shelter Chat 6")
+                .username("shelterchat6")
+                .password("admin")
+                .animalWL(new ArrayList<>())
+                .build();
+        animalShelterService.save(shelter);
+        shelter.getAnimalWL().add(animal);
+        animalShelterService.save(shelter);
+
+        // Crear un cliente
         Client client = Client.builder()
                 .id("c_chat6")
                 .name("Frank")
@@ -212,9 +333,6 @@ class ChatServiceTest {
         assertEquals(chat.getId(), foundChat.getId());
     }
 
-    /**
-     * Se prueba que la consulta de un chat inexistente lanza la excepción esperada.
-     */
     @Test
     void testFindById_NotFound() {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
@@ -223,34 +341,46 @@ class ChatServiceTest {
         assertEquals("404 NOT_FOUND \"Chat no encontrado con ID: nonexistent\"", exception.getMessage());
     }
 
-    /**
-     * Se prueba el envío de un mensaje en un chat.
-     * En este test se crea manualmente un animal "Dodo" con su refugio asociado.
-     */
     @Test
     void testSendMessage() {
-        // Creamos un animal "Dodo"
-        Animal animal = Animal.builder().name("Dodo").build();
-        Animal savedAnimal = animalService.save(animal);
+        // Crear un animal nuevo
+        Animal animal = Animal.builder()
+                .id("chat_animal_7")
+                .name("Ginger")
+                .color("anaranjado")
+                .size("mediano")
+                .race("gato")
+                .description("Gata simpática")
+                .birth_date("11-11-2020")
+                .entryDate("15-11-2021")
+                .sex("Hembra")
+                .age(3)
+                .sterile(true)
+                .disability(false)
+                .imageUrl("http://example.com/ginger.jpg")
+                .build();
+        animalService.save(animal);
 
-        // Creamos un refugio y asociamos el animal "Dodo"
+        // Crear un refugio y asociar el animal
         AnimalShelter shelter = AnimalShelter.builder()
-                .name("TestShelter")
-                .username("testshelter")
-                .password("pass")
+                .id("shelter_chat_7")
+                .name("Shelter Chat 7")
+                .username("shelterchat7")
+                .password("admin")
                 .animalWL(new ArrayList<>())
                 .build();
-        AnimalShelter savedShelter = animalShelterService.save(shelter);
-        savedShelter.getAnimalWL().add(savedAnimal);
-        savedShelter = animalShelterService.save(savedShelter);
+        animalShelterService.save(shelter);
+        shelter.getAnimalWL().add(animal);
+        animalShelterService.save(shelter);
 
+        // Crear un cliente
         Client client = Client.builder()
                 .id("c_chat7")
                 .name("Grace")
                 .build();
         clientService.save(client);
 
-        ChatCreation chatCreation = new ChatCreation(savedAnimal.getId(), client.getId());
+        ChatCreation chatCreation = new ChatCreation(animal.getId(), client.getId());
         Chat chat = chatService.save(chatCreation);
 
         Message message = Message.builder()

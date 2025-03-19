@@ -31,16 +31,16 @@ class ClientServiceTest {
     void testSaveClient() {
         Client client = Client.builder()
                 .id("c1")
-                .username("testuser")
+                .username("testuser1")
                 .password("pass")
-                .email("testuser@example.com")
-                .name("Test User")
+                .email("testuser1@example.com")
+                .name("Test User 1")
                 .animalWL(Collections.emptyList())
                 .build();
 
         Client savedClient = clientService.save(client);
         assertNotNull(savedClient);
-        assertEquals("testuser", savedClient.getUsername());
+        assertEquals("testuser1", savedClient.getUsername());
     }
 
     @Test
@@ -151,7 +151,7 @@ class ClientServiceTest {
                 .build();
         clientService.save(client);
 
-        // Crear y guardar un animal
+        // Crear y guardar un animal (ID único que no coincide con los de la semilla)
         Animal animal = new Animal();
         animal.setId("a1");
         animal.setName("Fluffy");
@@ -192,7 +192,7 @@ class ClientServiceTest {
                 .build();
         clientService.save(client);
 
-        // Crear y guardar un animal
+        // Crear y guardar un animal (ID único)
         Animal animal = new Animal();
         animal.setId("a2");
         animal.setName("Buddy");
@@ -235,7 +235,7 @@ class ClientServiceTest {
                 .build();
         clientService.save(client);
 
-        // Crear y guardar algunos animales
+        // Crear y guardar algunos animales (IDs únicos)
         Animal animal1 = new Animal();
         animal1.setId("a3");
         animal1.setName("Bella");
@@ -274,7 +274,7 @@ class ClientServiceTest {
         // Obtener recomendaciones: se espera que devuelva animal2 (u otros que se asemejen a las características promedio)
         List<Animal> recommendations = clientService.getRecommendations("c9");
         assertNotNull(recommendations);
-        // En este caso, al tener solo animal2 fuera de la lista de deseos, se espera que figure en las recomendaciones
+        // Al tener solo animal2 fuera de la lista de deseos, se espera que figure en las recomendaciones
         assertTrue(recommendations.contains(animal2));
     }
 
@@ -292,5 +292,4 @@ class ClientServiceTest {
         });
         assertTrue(exception2.getMessage().contains("Client not found with username: nonexistent"));
     }
-
 }
