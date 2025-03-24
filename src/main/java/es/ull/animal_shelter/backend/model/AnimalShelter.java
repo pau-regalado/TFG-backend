@@ -2,6 +2,7 @@ package es.ull.animal_shelter.backend.model;
 
 
 import es.ull.animal_shelter.backend.controller.dto.RegisterAnimalShelterRequest;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Document (collection = "animal-shelters")
 public class AnimalShelter extends User {
 	private String name;
