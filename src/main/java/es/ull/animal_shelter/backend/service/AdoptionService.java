@@ -91,7 +91,12 @@ public class AdoptionService {
     @Transactional
     public Adoption updateClientEvaluation(String id, ClientValue value) {
         Adoption adoption = findById(id);
-        adoption.getValue().setClientValue(value);
+        if (adoption.getValue() != null) {
+            adoption.getValue().setClientValue(value);
+        } else {
+            adoption.setValue(Value.builder().clientValue(value).build());
+        }
+
         return adoptionRepository.save(adoption);
     }
 
@@ -99,7 +104,11 @@ public class AdoptionService {
     @Transactional
     public Adoption updateAnimalShelterEvaluation(String id, AnimalShelterValue value) {
         Adoption adoption = findById(id);
-        adoption.getValue().setAnimalShelterValue(value);
+        if (adoption.getValue() != null) {
+            adoption.getValue().setAnimalShelterValue(value);
+        } else {
+            adoption.setValue(Value.builder().animalShelterValue(value).build());
+        }
         return adoptionRepository.save(adoption);
     }
 
