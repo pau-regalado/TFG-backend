@@ -2,13 +2,11 @@ package es.ull.animal_shelter.backend.controller;
 
 import es.ull.animal_shelter.backend.controller.dto.AdoptionDetails;
 import es.ull.animal_shelter.backend.model.Adoption;
-import es.ull.animal_shelter.backend.model.Value;
+import es.ull.animal_shelter.backend.model.AnimalShelterValue;
+import es.ull.animal_shelter.backend.model.ClientValue;
 import es.ull.animal_shelter.backend.service.AdoptionService;
-import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,7 +19,6 @@ public class AdoptionController {
 
     @PostMapping
     public Adoption save(@RequestBody AdoptionDetails adoptiondetails) {
-        //LogManager.getLogger(this.getClass()).warn(adoptiondetails.toString());
         return adoptionService.save(adoptiondetails);
     }
 
@@ -56,12 +53,12 @@ public class AdoptionController {
     }
 
     @PatchMapping("/{adoptionId}/client-value")
-    public Adoption updateClientEvaluation(@PathVariable String adoptionId, @RequestBody Value value) {
+    public Adoption updateClientEvaluation(@PathVariable String adoptionId, @RequestBody ClientValue value) {
         return adoptionService.updateClientEvaluation(adoptionId, value);
     }
 
     @PatchMapping("/{adoptionId}/shelter-value")
-    public Adoption updateAnimalShelterEvaluation(@PathVariable String adoptionId, @RequestBody Value value) {
+    public Adoption updateAnimalShelterEvaluation(@PathVariable String adoptionId, @RequestBody AnimalShelterValue value) {
         return adoptionService.updateAnimalShelterEvaluation(adoptionId, value);
     }
 }

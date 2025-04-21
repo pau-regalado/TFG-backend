@@ -3,8 +3,7 @@ package es.ull.animal_shelter.backend.service;
 import es.ull.animal_shelter.backend.controller.dto.AdoptionDetails;
 import es.ull.animal_shelter.backend.model.*;
 import es.ull.animal_shelter.backend.repository.AdoptionRepository;
-import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,58 +14,57 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AdoptionService {
-    @Autowired
-    private AdoptionRepository adoptionRepository;
-    @Autowired
-    private AnimalService animalService;
-    @Autowired
-    private AnimalShelterService animalShelterService;
-    @Autowired
-    private ClientService clientService;
+    private final AdoptionRepository adoptionRepository;
+    private final AnimalService animalService;
+    private final AnimalShelterService animalShelterService;
+    private final ClientService clientService;
 
     public Adoption save(AdoptionDetails adoptionDetails) {
-        // Verificar si ya existe una solicitud pendiente para este cliente y animal
         boolean alreadyRequested = adoptionRepository.existsByClientIdAndAnimalIdAndStatus(
                 adoptionDetails.getClientId(),
                 adoptionDetails.getAnimalId(),
                 AdoptionStatus.PENDING
         );
         if (alreadyRequested) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
-                    "Ya has enviado una solicitud para este animal y está pendiente de aprobación.");
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Ya has enviado una solicitud para este animal y está pendiente de aprobación."
+            );
         }
-        Animal animal = animalService.findById(adoptionDetails.getAnimalId());
-        AnimalShelter animalShelter = animalShelterService.findByAnimal(animal);
-        Client client = clientService.findById(adoptionDetails.getClientId());
-        Adoption adoption = Adoption.builder()
+        var animal = animalService.findById(adoptionDetails.getAnimalId());
+        var shelter = animalShelterService.findByAnimal(animal);
+        var client = clientService.findById(adoptionDetails.getClientId());
+        var adoption = Adoption.builder()
                 .id(UUID.randomUUID().toString())
                 .animal(animal)
+                .animalShelter(shelter)
                 .client(client)
-                .animalShelter(animalShelter)
                 .date(LocalDateTime.now())
                 .status(AdoptionStatus.PENDING)
                 .build();
         return adoptionRepository.save(adoption);
     }
 
+    @Transactional
     public Adoption confirmAdoptionRequest(String id) {
-        Adoption adoption = this.findById(id);
-        adoption.setStatus(AdoptionStatus.ACCEPTED); // El estado de la adopción comienza como PENDIENTE
-        adoption.setDate(LocalDateTime.now()); // Fecha de la solicitud
-        Adoption savedAdoption = adoptionRepository.save(adoption);
-        animalShelterService.deleteByAnimalId(savedAdoption.getAnimal().getId());
-
-        List<Adoption> pendingAdoptions = adoptionRepository.findByAnimalAndStatus(savedAdoption.getAnimal(), AdoptionStatus.PENDING);
-        pendingAdoptions.forEach((a -> a.setStatus(AdoptionStatus.REJECTED)));
-        adoptionRepository.saveAll(pendingAdoptions);
-        return savedAdoption;
+        var adoption = findById(id);
+        adoption.setStatus(AdoptionStatus.ACCEPTED);
+        adoption.setDate(LocalDateTime.now());
+        var saved = adoptionRepository.save(adoption);
+        animalShelterService.deleteByAnimalId(saved.getAnimal().getId());
+        var pending = adoptionRepository.findByAnimalAndStatus(saved.getAnimal(), AdoptionStatus.PENDING);
+        pending.forEach(a -> a.setStatus(AdoptionStatus.REJECTED));
+        adoptionRepository.saveAll(pending);
+        return saved;
     }
 
+    @Transactional
     public Adoption rejectAdoptionRequest(String id) {
-        Adoption adoption = this.findById(id);
-        adoption.setStatus(AdoptionStatus.REJECTED); // El estado de la adopción comienza como PENDIENTE
-        adoption.setDate(LocalDateTime.now()); // Fecha de la solicitud
+        var adoption = findById(id);
+        adoption.setStatus(AdoptionStatus.REJECTED);
+        adoption.setDate(LocalDateTime.now());
         return adoptionRepository.save(adoption);
     }
 
@@ -76,7 +74,10 @@ public class AdoptionService {
 
     public Adoption findById(String id) {
         return adoptionRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Adoption no encontrado con ID: " + id));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Adoption no encontrado con ID: " + id
+                ));
     }
 
     public List<Adoption> findByAnimalShelterId(String id) {
@@ -87,25 +88,19 @@ public class AdoptionService {
         return adoptionRepository.findByClientId(id);
     }
 
-    public Adoption updateClientEvaluation(String id, Value value) {
+    @Transactional
+    public Adoption updateClientEvaluation(String id, ClientValue value) {
         Adoption adoption = findById(id);
-        if (adoption.getValue() == null) {
-            adoption.setValue(value);
-        } else {
-            adoption.getValue().setValueClient(value.getValueClient());
-            adoption.getValue().setStarsClient(value.getStarsClient());
-        }
+        adoption.getValue().setClientValue(value);
         return adoptionRepository.save(adoption);
     }
 
-    public Adoption updateAnimalShelterEvaluation(String id, Value value) {
+
+    @Transactional
+    public Adoption updateAnimalShelterEvaluation(String id, AnimalShelterValue value) {
         Adoption adoption = findById(id);
-        if (adoption.getValue() == null) {
-            adoption.setValue(value);
-        } else {
-            adoption.getValue().setValueAnimalShelter(value.getValueAnimalShelter());
-            adoption.getValue().setStarsAnimalShelter(value.getStarsAnimalShelter());
-        }
+        adoption.getValue().setAnimalShelterValue(value);
         return adoptionRepository.save(adoption);
     }
+
 }

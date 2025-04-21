@@ -1,3 +1,4 @@
+// src/main/java/es/ull/animal_shelter/backend/model/Adoption.java
 package es.ull.animal_shelter.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,8 +25,9 @@ public class Adoption {
     private Animal animal;
     private AnimalShelter animalShelter;
     private Client client;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
     private AdoptionStatus status;
+    @Nullable
     private Value value;
 }
