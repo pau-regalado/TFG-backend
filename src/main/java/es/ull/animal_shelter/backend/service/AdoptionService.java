@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -84,5 +85,27 @@ public class AdoptionService {
 
     public List<Adoption> findByClientId(String id) {
         return adoptionRepository.findByClientId(id);
+    }
+
+    public Adoption updateClientEvaluation(String id, Value value) {
+        Adoption adoption = findById(id);
+        if (adoption.getValue() == null) {
+            adoption.setValue(value);
+        } else {
+            adoption.getValue().setValueClient(value.getValueClient());
+            adoption.getValue().setStarsClient(value.getStarsClient());
+        }
+        return adoptionRepository.save(adoption);
+    }
+
+    public Adoption updateAnimalShelterEvaluation(String id, Value value) {
+        Adoption adoption = findById(id);
+        if (adoption.getValue() == null) {
+            adoption.setValue(value);
+        } else {
+            adoption.getValue().setValueAnimalShelter(value.getValueAnimalShelter());
+            adoption.getValue().setStarsAnimalShelter(value.getStarsAnimalShelter());
+        }
+        return adoptionRepository.save(adoption);
     }
 }

@@ -2,10 +2,13 @@ package es.ull.animal_shelter.backend.controller;
 
 import es.ull.animal_shelter.backend.controller.dto.AdoptionDetails;
 import es.ull.animal_shelter.backend.model.Adoption;
+import es.ull.animal_shelter.backend.model.Value;
 import es.ull.animal_shelter.backend.service.AdoptionService;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -52,4 +55,13 @@ public class AdoptionController {
         return adoptionService.rejectAdoptionRequest(id);
     }
 
+    @PatchMapping("/{adoptionId}/client-value")
+    public Adoption updateClientEvaluation(@PathVariable String adoptionId, @RequestBody Value value) {
+        return adoptionService.updateClientEvaluation(adoptionId, value);
+    }
+
+    @PatchMapping("/{adoptionId}/shelter-value")
+    public Adoption updateAnimalShelterEvaluation(@PathVariable String adoptionId, @RequestBody Value value) {
+        return adoptionService.updateAnimalShelterEvaluation(adoptionId, value);
+    }
 }

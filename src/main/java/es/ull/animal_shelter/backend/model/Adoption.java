@@ -1,8 +1,8 @@
 package es.ull.animal_shelter.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.EnumNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.EnumNaming;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mongodb.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 @Document
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Adoption {
     @Id
     private String id;
@@ -26,4 +27,5 @@ public class Adoption {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
     private AdoptionStatus status;
+    private Value value;
 }
