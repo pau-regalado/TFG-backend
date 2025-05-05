@@ -4,6 +4,7 @@ import es.ull.animal_shelter.backend.controller.dto.AdoptionDetails;
 import es.ull.animal_shelter.backend.model.*;
 import es.ull.animal_shelter.backend.repository.AdoptionRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,4 +113,19 @@ public class AdoptionService {
         return adoptionRepository.save(adoption);
     }
 
+    public Double fetchAverageStars(String animalShelterId) {
+        List<Adoption> adoptions = this.adoptionRepository.findByAnimalShelterId(animalShelterId);
+        if (adoptions.isEmpty()) {
+            return 0.0;
+        }
+        double average = adoptions.stream()
+                .mapToInt(adoption -> {
+                    assert adoption.getValue() != null;
+                    assert adoption.getValue().getClientValue() != null;
+                    return adoption.getValue().getClientValue().getStars();
+                })
+                .average()
+                .orElse(0.0); // Por si acaso la lista está vacía
+        return average;
+    }
 }

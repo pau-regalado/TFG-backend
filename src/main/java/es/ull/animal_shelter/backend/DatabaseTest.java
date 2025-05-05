@@ -104,10 +104,51 @@ public class DatabaseTest {
         LogManager.getLogger(this.getClass()).warn("        ------- animalShelters");
 
         Adoption[] adoptions = {
-                Adoption.builder().animalShelter(animalShelters[0]).animal(animals[0]).client(clientsLogin[0]).date(LocalDateTime.now()).status(AdoptionStatus.PENDING).build(),
-                Adoption.builder().animalShelter(animalShelters[1]).animal(animals[1]).client(clientsLogin[1]).date(LocalDateTime.of(2024,12,12,14,30)).status(AdoptionStatus.PENDING).build()
+                Adoption.builder()
+                        .animalShelter(animalShelters[0])
+                        .animal(animals[0])
+                        .client(clientsLogin[0])
+                        .date(LocalDateTime.of(2025, 3, 15, 10, 0))
+                        .status(AdoptionStatus.ACCEPTED)
+                        .value(Value.builder()
+                                .clientValue(ClientValue.builder()
+                                        .stars(5)
+                                        .value("Todo fue perfecto, el refugio muy atento.")
+                                        .build())
+                                .build())
+                        .build(),
+
+                Adoption.builder()
+                        .animalShelter(animalShelters[0])
+                        .animal(animals[1])
+                        .client(clientsLogin[1])
+                        .date(LocalDateTime.of(2025, 2, 20, 16, 30))
+                        .status(AdoptionStatus.ACCEPTED)
+                        .value(Value.builder()
+                                .clientValue(ClientValue.builder()
+                                        .stars(4)
+                                        .value("Muy buena experiencia, aunque hubo un poco de espera.")
+                                        .build())
+                                .build())
+                        .build(),
+
+                Adoption.builder()
+                        .animalShelter(animalShelters[0])
+                        .animal(animals[2])
+                        .client(clientsLogin[2])
+                        .date(LocalDateTime.of(2025, 1, 5, 12, 15))
+                        .status(AdoptionStatus.ACCEPTED)
+                        .value(Value.builder()
+                                .clientValue(ClientValue.builder()
+                                        .stars(3)
+                                        .value("El proceso fue bien pero me costó contactar.")
+                                        .build())
+                                .build())
+                        .build()
         };
+
         this.adoptionRepository.saveAll(List.of(adoptions));
         LogManager.getLogger(this.getClass()).warn("        ------- adoptions");
+
     }
 }
