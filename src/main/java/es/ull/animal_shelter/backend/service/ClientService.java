@@ -1,8 +1,10 @@
 package es.ull.animal_shelter.backend.service;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import es.ull.animal_shelter.backend.controller.dto.AnimalLikes;
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import es.ull.animal_shelter.backend.repository.AnimalRepository;
@@ -40,6 +42,8 @@ public class ClientService {
     public List<Client> findAll() {
         return clientRepository.findAll();
     }
+
+
 
     public Client login(LoginRequest loginRequest) {
         return clientRepository.findByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword())
@@ -144,6 +148,23 @@ public class ClientService {
 
         return (ageSimilarity * 0.4) + (colorSimilarity * 0.2) + (sizeSimilarity * 0.2) + (raceSimilarity * 0.2);
     }
+
+    public List<AnimalLikes> getAnimalLikes() {
+        Map<String, Long> counts = clientRepository.findAll().stream()
+                .filter(c -> c.getAnimalWL() != null)
+                .flatMap(c -> c.getAnimalWL().stream())
+                .map(Animal::getId)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        // 3. Convertimos cada entrada (animalId, count) en un AnimalLikes
+        return counts.entrySet().stream()
+                .map(e -> AnimalLikes.builder()
+                        .animalId(e.getKey())
+                        .likes(e.getValue().intValue())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
 
 }
 

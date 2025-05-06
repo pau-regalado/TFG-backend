@@ -2,6 +2,7 @@ package es.ull.animal_shelter.backend.controller;
 
 import java.util.List;
 
+import es.ull.animal_shelter.backend.controller.dto.AnimalLikes;
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,6 @@ public class ClientController {
 	
 	@GetMapping
 	public List<Client> findAll() {
-		clientService.findAll().stream().map(a -> a)
-		.forEach(a -> System.out.print(a.toString()));
 		return clientService.findAll();
 	}
 
@@ -61,6 +60,11 @@ public class ClientController {
 	@GetMapping("/{clientId}/recommendations")
 	public List<Animal> getRecommendations(@PathVariable String clientId) {
 		return clientService.getRecommendations(clientId);
+	}
+
+	@GetMapping("/likes")
+	public List<AnimalLikes> getAnimalLikes() {
+		return clientService.getAnimalLikes();
 	}
 
 }

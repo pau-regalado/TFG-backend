@@ -68,5 +68,4 @@ public class AdoptionController {
         return adoptionService.fetchAverageStars(animalShelterId);
     }
 
-
 }
