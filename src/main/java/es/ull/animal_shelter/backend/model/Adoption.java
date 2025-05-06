@@ -1,4 +1,3 @@
-// src/main/java/es/ull/animal_shelter/backend/model/Adoption.java
 package es.ull.animal_shelter.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
