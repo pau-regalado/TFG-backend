@@ -36,12 +36,12 @@ public class AnimalShelterService {
 
     public AnimalShelter login(LoginRequest loginRequest) {
         return animalShelterRepository.findByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not register"));
     }
 
     public AnimalShelter findById(String idAnimalShelter) {
         return animalShelterRepository.findById(idAnimalShelter)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter with ID not found"));
     }
 
     public Animal addAnimal(String id, Animal animalData) {
