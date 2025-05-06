@@ -124,18 +124,6 @@ class ClientServiceTest {
         assertEquals("loginuser", loggedClient.getUsername());
     }
 
-    /*@Test
-    void testRegister() {
-        // Se asume que RegisterClientRequest tiene constructor (username, password, email, name)
-        RegisterClientRequest registerRequest = new RegisterClientRequest("lastName");
-        Client registeredClient = clientService.register(registerRequest);
-        assertNotNull(registeredClient);
-        assertEquals("name", registeredClient.getName());
-        assertEquals("lastName", registeredClient.getUsername());
-        assertEquals("newuser@example.com", registeredClient.getEmail());
-        assertEquals("New User", registeredClient.getName());
-    }*/
-
     @Test
     void testAddAnimalToWishListAndViewAnimals() {
         // Crear y guardar un cliente

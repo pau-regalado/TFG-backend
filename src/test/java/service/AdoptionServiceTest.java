@@ -235,4 +235,6 @@ class AdoptionServiceTest {
         assertFalse(adoptions.isEmpty());
         adoptions.forEach(a -> assertEquals(client.getId(), a.getClient().getId()));
     }
+
+
 }
