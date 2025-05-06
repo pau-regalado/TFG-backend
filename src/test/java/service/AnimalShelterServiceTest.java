@@ -159,6 +159,6 @@ class AnimalShelterServiceTest {
         Exception exception = assertThrows(ResponseStatusException.class, () -> {
             animalShelterService.findById("nonexistent");
         });
-        assertTrue(exception.getMessage().contains("Animal Shelter with ID not found"));
+        assertTrue(exception.getMessage().contains("Animal Shelter not found"));
     }
 }
