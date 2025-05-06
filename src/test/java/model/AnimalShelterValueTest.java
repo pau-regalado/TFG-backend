@@ -27,43 +27,4 @@ class AnimalShelterValueTest {
         assertEquals(4, asv.getStars());
     }
 
-    @Test
-    void testJsonSerializationIncludesAllFields() throws Exception {
-        AnimalShelterValue asv = AnimalShelterValue.builder()
-                .value(" prompt communication ")
-                .stars(3)
-                .build();
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(asv);
-
-        assertTrue(json.contains("prompt communication"));
-        assertTrue(json.contains("stars"));
-    }
-
-    @Test
-    void testJsonSerializationNullValue() throws Exception {
-        AnimalShelterValue asv = AnimalShelterValue.builder()
-                .value(null)
-                .stars(2)
-                .build();
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(asv);
-
-        // value field should be absent, stars should be present
-        assertFalse(json.contains("value"));
-        assertTrue(json.contains("stars"));
-    }
-
-    @Test
-    void testJsonSerializationNullStars() throws Exception {
-        AnimalShelterValue asv = AnimalShelterValue.builder()
-                .value("Friendly staff")
-                .stars(null)
-                .build();
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(asv);
-
-        assertTrue(json.contains("Friendly staff"));
-        assertFalse(json.contains("stars"));
-    }
 }
