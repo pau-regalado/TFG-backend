@@ -131,39 +131,6 @@ class AnimalShelterServiceTest {
         assertEquals("Luna", addedAnimal.getName());
     }
 
-    /*@Test
-    void testDeleteAnimal() {
-        AnimalShelter shelter = AnimalShelter.builder()
-                .id("s6")
-                .name("Pet Haven")
-                .username("pethaven")
-                .password("secure")
-                .animalWL(Collections.emptyList())
-                .build();
-        animalShelterService.save(shelter);
-
-        Animal animal = new Animal();
-        animal.setId("a2");
-        animal.setName("Max");
-        animal.setColor("Brown");
-        animal.setSize("Large");
-        animal.setRace("Dog");
-        animal.setDescription("Loyal dog");
-        animal.setBirth_date("05-05-2021");
-        animal.setEntryDate("06-06-2022");
-        animal.setSex("Male");
-        animal.setAge(3);
-        animal.setSterile(false);
-        animal.setDisability(false);
-        animal.setImageUrl("http://example.com/max.jpg");
-
-        animalShelterService.addAnimal("s6", animal);
-
-        AnimalShelter updatedShelter = animalShelterService.deleteAnimal("s6", "a2");
-        assertNotNull(updatedShelter);
-        assertFalse(updatedShelter.getAnimalWL().contains(animal));
-    }*/
-
     @Test
     void testFindByAnimalId() {
         AnimalShelter shelter = AnimalShelter.builder()
@@ -192,6 +159,6 @@ class AnimalShelterServiceTest {
         Exception exception = assertThrows(ResponseStatusException.class, () -> {
             animalShelterService.findById("nonexistent");
         });
-        assertTrue(exception.getMessage().contains("Animal Shelter not found"));
+        assertTrue(exception.getMessage().contains("Animal Shelter with ID not found"));
     }
 }
