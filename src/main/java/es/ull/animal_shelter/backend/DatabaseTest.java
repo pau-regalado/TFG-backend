@@ -34,7 +34,9 @@ public class DatabaseTest {
         private final String v; Race(String v){ this.v=v;} public String v(){return v;}}
     private enum Color {
         BEIGE("beige"), MARRON("marrón"), BLANCO("blanco"),
-        BEIGE_Y_NEGRO("beige y negro"), BEIGE_Y_BLANCO("beige y blanco");
+        NEGRO("negro"), GRAY_WHITE("gris y blanco"),
+        BEIGE_Y_NEGRO("beige y negro"), BEIGE_Y_BLANCO("beige y blanco"),
+        BLANCO_Y_NEGRO("blanco y negro"), BLANCO_Y_BEIGE("blanco y beige");
         private final String v; Color(String v){ this.v=v;} public String v(){return v;}}
 
     @Autowired
