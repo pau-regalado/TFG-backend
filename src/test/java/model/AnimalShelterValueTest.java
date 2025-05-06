@@ -1,6 +1,5 @@
 package model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import es.ull.animal_shelter.backend.model.AnimalShelterValue;
 import org.junit.jupiter.api.Test;
 

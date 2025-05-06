@@ -2,12 +2,10 @@ package service;
 
 import es.ull.animal_shelter.backend.BackendApplication;
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
-import es.ull.animal_shelter.backend.controller.dto.RegisterAnimalShelterRequest;
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.AnimalShelter;
 import es.ull.animal_shelter.backend.service.AnimalService;
 import es.ull.animal_shelter.backend.service.AnimalShelterService;
-import es.ull.animal_shelter.backend.repository.AnimalShelterRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
