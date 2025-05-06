@@ -5,7 +5,6 @@ import es.ull.animal_shelter.backend.controller.dto.RegisterAnimalShelterRequest
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.AnimalShelter;
 import es.ull.animal_shelter.backend.service.AnimalShelterService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
