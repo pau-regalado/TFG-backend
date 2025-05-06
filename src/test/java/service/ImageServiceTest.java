@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = BackendApplication.class)
-public class ImageServiceTest {
+class ImageServiceTest {
 
     @Autowired
     private ImageService imageService;

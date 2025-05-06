@@ -1,13 +1,11 @@
 package dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import es.ull.animal_shelter.backend.controller.dto.RegisterUserRequest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RegisterUserRequestTest {
+class RegisterUserRequestTest {
 
     @Test
     void testBuilderAndGetters() {

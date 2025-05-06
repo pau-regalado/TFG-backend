@@ -1,6 +1,5 @@
 package model;
 
-import es.ull.animal_shelter.backend.controller.dto.RegisterAnimalShelterRequest;
 import es.ull.animal_shelter.backend.model.AnimalShelter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -108,20 +107,4 @@ class AnimalShelterTest {
         assertNotEquals(shelter1, shelter2);
         assertNotEquals(shelter1.hashCode(), shelter2.hashCode());
     }
-
-    /*@Test
-    void testFromRegisterAnimalShelterRequest() {
-        RegisterAnimalShelterRequest request = new RegisterAnimalShelterRequest("New Shelter", "New Location", 123123123, "http://example.com/rescue.jpg", 20.00000, 20.0000);
-
-        AnimalShelter newShelter = AnimalShelter.fromRegisterAnimalShelterRequest(request);
-
-        assertEquals("New Shelter", newShelter.getName());
-        assertEquals("newUser", newShelter.getUsername());
-        assertEquals("newPassword", newShelter.getPassword());
-        assertEquals("newEmail@example.com", newShelter.getEmail());
-        assertEquals("New Location", newShelter.getLocation());
-        assertEquals(123123123, newShelter.getNumberPhone());
-        assertEquals("http://example.com/rescue.jpg", newShelter.getImageUrl()); // Se añade esta verificación
-        assertTrue(newShelter.getAnimalWL().isEmpty());
-    }*/
 }

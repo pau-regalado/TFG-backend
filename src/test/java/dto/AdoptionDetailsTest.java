@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AdoptionDetailsTest {
+class AdoptionDetailsTest {
 
     @Test
     void testBuilderAndGetters() {

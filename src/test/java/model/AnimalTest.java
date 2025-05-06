@@ -131,8 +131,6 @@ class AnimalTest {
 
     @Test
     void testToString() {
-        String animal1ToString = animal1.toString();
-
         assertTrue(animal1.toString().contains("imageUrl=http://example.com/lola.jpg"));
         assertTrue(animal2.toString().contains("imageUrl=http://example.com/max.jpg"));
     }
