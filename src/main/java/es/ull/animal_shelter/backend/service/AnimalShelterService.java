@@ -71,7 +71,7 @@ public class AnimalShelterService {
     public AnimalShelter findByAnimal(Animal animal) {
         return animalShelterRepository.findAll().stream()
                 .filter(shelter -> shelter.getAnimalWL().contains(animal)).findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal not found"));
     }
 
     public AnimalShelter findByAnimalId(String animalId) {
@@ -79,7 +79,7 @@ public class AnimalShelterService {
                 .filter(shelter -> shelter.getAnimalWL().stream()
                         .anyMatch(animal -> animal.getId().equals(animalId)))  // Filtrar por animalId
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal Shelter not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal ID not found"));
     }
 
     public AnimalShelter register(RegisterAnimalShelterRequest registerAnimalShelterRequest) {
