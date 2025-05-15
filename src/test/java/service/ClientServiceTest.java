@@ -266,13 +266,11 @@ class ClientServiceTest {
 
     @Test
     void testClientNotFound() {
-        // Probar findById con un cliente inexistente
         Exception exception = assertThrows(ResponseStatusException.class, () -> {
             clientService.findById("nonexistent");
         });
         assertTrue(exception.getMessage().contains("Client not found with id: nonexistent"));
 
-        // Probar findByUsername con un cliente inexistente
         Exception exception2 = assertThrows(ResponseStatusException.class, () -> {
             clientService.findByUsername("nonexistent");
         });
