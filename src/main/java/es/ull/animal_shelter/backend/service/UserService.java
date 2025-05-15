@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @Autowired
     ClientRepository clientRepository;
 
     public boolean authenticate(String username, String password) {

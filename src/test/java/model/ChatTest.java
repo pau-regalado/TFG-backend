@@ -138,16 +138,5 @@ class ChatTest {
         assertNotEquals(chat1, chat2);
         assertNotEquals(chat1.hashCode(), chat2.hashCode());
     }
-
-    /*@Test
-    void testToString() {
-        String chat1String = chat1.toString();
-        // Se verifica que la representación en cadena incluya algunos identificadores clave
-        assertTrue(chat1String.contains("chat1"));
-        assertTrue(chat1String.contains(dummyAnimal.getId()));
-        assertTrue(chat1String.contains(dummyShelter.getId()));
-        assertTrue(chat1String.contains(dummyClient.getId()));
-        assertTrue(chat1String.contains("m1")); // Se espera que aparezca el id del mensaje
-    }*/
 }
 

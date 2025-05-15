@@ -85,8 +85,6 @@ class AdoptionTest {
 
         // Verificar que los valores están presentes en la cadena (ajustando la fecha y los campos de los objetos)
         assertTrue(adoptionToString.contains("id=AD001"));
-        //assertTrue(adoptionToString.contains("animal=Animal(id=A001, name=Lola, color=marrón, size=mediano, race=mestizo, description=Muy cariñosa, birth_date=02-02-2020, entryDate=17-10-2024, sex=Hembra, age=5, sterile=true, disability=false)"));
-        //assertTrue(adoptionToString.contains("animalShelter=AnimalShelter(name=Rescue Center 1, location=Santa Cruz, numberPhone=123456789, animalWL=[])"));
         assertTrue(adoptionToString.contains("client=Client(name=Carlos, lastName=Perez, animalWL=[])"));
         assertTrue(adoptionToString.contains("date=2025-03-05T14:30"));  // Asegúrate de que el formato de la fecha es el mismo
         assertTrue(adoptionToString.contains("status=PENDING"));
