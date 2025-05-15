@@ -20,7 +20,6 @@ public class ChatController {
 
     @PostMapping
     public Chat save(@RequestBody ChatCreation chatCreation) {
-        LogManager.getLogger(this.getClass()).warn(chatCreation.toString());
         return chatService.save(chatCreation);
     }
 
@@ -31,7 +30,6 @@ public class ChatController {
 
     @GetMapping("/client/{clientId}")
     public List<Chat> findByClientId(@PathVariable String clientId) {
-        LogManager.getLogger(this.getClass()).warn("Searching chat for client with id " + clientId);
         return chatService.findByClientId(clientId);
     }
 

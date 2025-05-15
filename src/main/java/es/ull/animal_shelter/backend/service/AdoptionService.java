@@ -118,14 +118,13 @@ public class AdoptionService {
         if (adoptions.isEmpty()) {
             return 0.0;
         }
-        double average = adoptions.stream()
+        return adoptions.stream()
                 .mapToInt(adoption -> {
                     assert adoption.getValue() != null;
                     assert adoption.getValue().getClientValue() != null;
                     return adoption.getValue().getClientValue().getStars();
                 })
                 .average()
-                .orElse(0.0); // Por si acaso la lista está vacía
-        return average;
+                .orElse(0.0);
     }
 }
