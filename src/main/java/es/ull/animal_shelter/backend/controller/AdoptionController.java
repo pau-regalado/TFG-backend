@@ -5,16 +5,17 @@ import es.ull.animal_shelter.backend.model.Adoption;
 import es.ull.animal_shelter.backend.model.AnimalShelterValue;
 import es.ull.animal_shelter.backend.model.ClientValue;
 import es.ull.animal_shelter.backend.service.AdoptionService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/adoptions")
 public class AdoptionController {
 
-    @Autowired
     private AdoptionService adoptionService;
 
     @PostMapping

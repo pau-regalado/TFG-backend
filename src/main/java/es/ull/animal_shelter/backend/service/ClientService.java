@@ -9,7 +9,7 @@ import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import es.ull.animal_shelter.backend.repository.AnimalRepository;
 import es.ull.animal_shelter.backend.repository.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +17,11 @@ import es.ull.animal_shelter.backend.model.Client;
 import es.ull.animal_shelter.backend.model.Animal;
 import org.springframework.web.server.ResponseStatusException;
 
+@AllArgsConstructor
 @Service
 public class ClientService {
 
-    @Autowired
     private ClientRepository clientRepository;
-    @Autowired
     private AnimalRepository animalRepository;
     
     public Client save(Client client) {

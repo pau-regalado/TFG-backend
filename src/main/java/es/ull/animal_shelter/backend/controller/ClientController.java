@@ -5,21 +5,19 @@ import java.util.List;
 import es.ull.animal_shelter.backend.controller.dto.AnimalLikes;
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.model.Client;
 import es.ull.animal_shelter.backend.service.ClientService;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/clients")
 public class ClientController {
 
 	private final ClientService clientService;
-
-	public ClientController(ClientService clientService) {
-		this.clientService = clientService;
-	}
 
 	@PostMapping
 	public Client save(@RequestBody Client client) {

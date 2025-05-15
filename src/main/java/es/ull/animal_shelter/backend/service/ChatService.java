@@ -3,8 +3,7 @@ package es.ull.animal_shelter.backend.service;
 import es.ull.animal_shelter.backend.controller.dto.ChatCreation;
 import es.ull.animal_shelter.backend.model.*;
 import es.ull.animal_shelter.backend.repository.ChatRepository;
-import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,18 +11,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class ChatService {
-    @Autowired
+
     private AnimalService animalService;
-    @Autowired
     private AnimalShelterService animalShelterService;
-    @Autowired
     private ClientService clientService;
-    @Autowired
     private MessageService messageService;
 
-    @Autowired
     private ChatRepository chatRepository;
 
     public Chat save(ChatCreation chatCreation) {

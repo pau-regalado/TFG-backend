@@ -1,8 +1,8 @@
 package es.ull.animal_shelter.backend.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import es.ull.animal_shelter.backend.model.Animal;
 import es.ull.animal_shelter.backend.service.AnimalService;
 
+@AllArgsConstructor
 @RestController
-@Service
 @RequestMapping("/api/v1")
 public class AnimalController {
-	@Autowired
+
 	private AnimalService animalService;
 	
 	@PostMapping("/animals")

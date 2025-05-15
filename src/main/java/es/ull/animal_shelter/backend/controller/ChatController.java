@@ -4,18 +4,17 @@ import es.ull.animal_shelter.backend.controller.dto.ChatCreation;
 import es.ull.animal_shelter.backend.model.Chat;
 import es.ull.animal_shelter.backend.model.Message;
 import es.ull.animal_shelter.backend.service.ChatService;
-import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/chats")
 public class ChatController {
 
-    @Autowired
     private ChatService chatService;
 
     @PostMapping

@@ -1,17 +1,16 @@
 package es.ull.animal_shelter.backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.ull.animal_shelter.backend.service.UserService;
 
-
+@AllArgsConstructor
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-	@Autowired
     private UserService userService;
 
 	@PostMapping("/sign")

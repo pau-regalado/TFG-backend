@@ -3,7 +3,7 @@ package es.ull.animal_shelter.backend.service;
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterAnimalShelterRequest;
 import es.ull.animal_shelter.backend.model.Animal;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import es.ull.animal_shelter.backend.model.AnimalShelter;
@@ -12,13 +12,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service 
 public class AnimalShelterService {
 
-    @Autowired
     private AnimalShelterRepository animalShelterRepository;
 
-    @Autowired
     private AnimalService animalService;
     
     public AnimalShelter save(AnimalShelter shelter) {
