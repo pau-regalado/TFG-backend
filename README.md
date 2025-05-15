@@ -1,1 +1,5 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=pau-regalado_TFG-backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=pau-regalado_TFG-backend)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=pau-regalado_TFG-backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=pau-regalado_TFG-backend)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=pau-regalado_TFG-backend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=pau-regalado_TFG-backend)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=pau-regalado_TFG-backend&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=pau-regalado_TFG-backend)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=pau-regalado_TFG-backend&metric=bugs)](https://sonarcloud.io/summary/new_code?id=pau-regalado_TFG-backend)
