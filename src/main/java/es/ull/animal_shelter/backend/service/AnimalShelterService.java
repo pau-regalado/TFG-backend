@@ -82,7 +82,8 @@ public class AnimalShelterService {
     }
 
     public AnimalShelter register(RegisterAnimalShelterRequest registerAnimalShelterRequest) {
-        AnimalShelter animalShelter = new AnimalShelter().fromRegisterAnimalShelterRequest(registerAnimalShelterRequest);
+        new AnimalShelter();
+        AnimalShelter animalShelter = AnimalShelter.fromRegisterAnimalShelterRequest(registerAnimalShelterRequest);
         return animalShelterRepository.save(animalShelter);
     }
 }

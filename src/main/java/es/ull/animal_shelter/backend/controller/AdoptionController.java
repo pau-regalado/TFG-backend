@@ -6,7 +6,6 @@ import es.ull.animal_shelter.backend.model.AnimalShelterValue;
 import es.ull.animal_shelter.backend.model.ClientValue;
 import es.ull.animal_shelter.backend.service.AdoptionService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

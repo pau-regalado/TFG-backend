@@ -2,7 +2,6 @@ package es.ull.animal_shelter.backend.controller;
 
 import java.util.List;
 
-import es.ull.animal_shelter.backend.controller.dto.AnimalLikes;
 import es.ull.animal_shelter.backend.controller.dto.LoginRequest;
 import es.ull.animal_shelter.backend.controller.dto.RegisterClientRequest;
 import lombok.AllArgsConstructor;
@@ -58,11 +57,6 @@ public class ClientController {
 	@GetMapping("/{clientId}/recommendations")
 	public List<Animal> getRecommendations(@PathVariable String clientId) {
 		return clientService.getRecommendations(clientId);
-	}
-
-	@GetMapping("/likes")
-	public List<AnimalLikes> getAnimalLikes() {
-		return clientService.getAnimalLikes();
 	}
 
 }
